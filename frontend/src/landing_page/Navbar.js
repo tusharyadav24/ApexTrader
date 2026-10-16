@@ -1,18 +1,18 @@
 
 import React from "react";
-
+import { Link } from "react-router-dom";
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg border-bottom bg-white">
+    <nav className="navbar navbar-expand-lg border-bottom bg-white " >
       <div className="container py-2">
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           <img
             src="/assets/logo.svg"
             alt="ApexTrade"
             style={{width:"100%"}}
             className="navbar-logo"
           />
-        </a>
+        </Link>
 
         <button
           className="navbar-toggler ms-auto"
@@ -32,19 +32,19 @@ function Navbar() {
         >
           <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-3">
             <li className="nav-item">
-              <a className="nav-link" href="/signup">Signup</a>
+              <Link className="nav-link" to="/signup">Signup</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/about">About</a>
+              <Link className="nav-link" to="/about">About</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/products">Products</a>
+              <Link className="nav-link" to="/products">Products</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/pricing">Pricing</a>
+              <Link className="nav-link" to="/pricing">Pricing</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/support">Support</a>
+              <Link className="nav-link" to="/support">Support</Link>
             </li>
           </ul>
         </div>

@@ -24,7 +24,7 @@ function Footer() {
             <a href="df">Careers</a>
             <br />
             <a href="df">ApexTrader.tech</a>
-            <br />df
+            <br />
             <a href="df">Press & media</a>
             <br />
             <a href="df">ApexTrader cares (CSR)</a>
