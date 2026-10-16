@@ -10,30 +10,41 @@ function Universe() {
           partner platforms
         </p>
 
-        <div className="col-4 p-3 mt-5">
-          <img src="assets/smallcaseLogo.png" alt=""/>
-          <p className="text-small text-muted">Thematic investment platform</p>
-        </div>
-        <div className="col-4 p-3 mt-5">
-          <img src="assets/smallcaseLogo.png" alt=""/>
-          <p className="text-small text-muted">Thematic investment platform</p>
-        </div>
-        <div className="col-4 p-3 mt-5">
-          <img src="assets/smallcaseLogo.png" alt=""/>
-          <p className="text-small text-muted">Thematic investment platform</p>
-        </div>
-        <div className="col-4 p-3 mt-5">
-          <img src="assets/smallcaseLogo.png" alt="" />
-          <p className="text-small text-muted">Thematic investment platform</p>
-        </div>
-        <div className="col-4 p-3 mt-5">
-          <img src="assets/smallcaseLogo.png" alt=""/>
-          <p className="text-small text-muted">Thematic investment platform</p>
-        </div>
-        <div className="col-4 p-3 mt-5">
-          <img src="assets/smallcaseLogo.png" alt="" />
-          <p className="text-small text-muted">Thematic investment platform</p>
-        </div>
+<div className="container pt-5">
+  <div className="row">
+    
+    <div className="col-4 p-3 mt-5">
+      <img src="/assets/smallcaseLogo.png" alt="" className="img-fluid" />
+      <p className="text-small text-muted">Thematic investment platform</p>
+    </div>
+
+    <div className="col-4 p-3 mt-5">
+      <img src="/assets/streakLogo.png" alt="" className="img-fluid" style={{width:"40%"}}/>
+      <p className="text-small text-muted">Algo & strategy platform</p>
+    </div>
+
+    <div className="col-4 p-3 mt-5">
+      <img src="/assets/sensibullLogo.svg" alt="" className="img-fluid" style={{width:"40%"}}/>
+      <p className="text-small text-muted">Options trading platform</p>
+    </div>
+
+    <div className="col-4 p-3 mt-5">
+      <img src="/assets/ApexTraderFundHouse.png" alt="" className="img-fluid" style={{width:"40%"}}/>
+      <p className="text-small text-muted">Asset management</p>
+    </div>
+
+    <div className="col-4 p-3 mt-5">
+      <img src="/assets/goldenpiLogo.png" alt="" className="img-fluid" style={{width:"40%"}}/>
+      <p className="text-small text-muted">Bonds trading platform</p>
+    </div>
+
+    <div className="col-4 p-3 mt-5">
+      <img src="/assets/dittoLogo.png" alt="" className="img-fluid" style={{width:"40%"}}/>
+      <p className="text-small text-muted">Insurance advisory</p>
+    </div>
+
+  </div>
+</div>
         <button
           className="p-2 btn btn-primary fs-5 mb-5"
           style={{ width: "20%", margin: "0 auto" }}
