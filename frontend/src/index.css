@@ -1,0 +1,84 @@
+body {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.sign-up-btn{
+  background-color: rgb(87, 87, 217) !important;
+  width: 15%;
+  margin: auto;
+  padding: 10px !important;
+}
+
+.navbar {
+  min-height: 88px;
+  padding: 0;
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  width: 175px;
+  height: auto;
+  display: block;
+}
+
+.navbar .navbar-nav .nav-link {
+  color: #424242;
+  font-size: 15px;
+  padding: 10px 8px;
+}
+
+.navbar .nav-link:hover {
+  color: #387ed1;
+}
+
+@media (min-width: 992px) {
+  .navbar .navbar-toggler {
+    display: none;
+  }
+
+  .navbar .navbar-collapse {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .navbar-logo {
+    width: 155px;
+  }
+
+  .navbar .navbar-nav {
+    padding-top: 12px;
+    align-items: flex-start;
+  }
+}
+#supportHero{
+  background-color: rgb(56, 126, 209);
+  color: white;
+}
+
+#supportHero a{
+  color: white;
+}
+
+#supportWrapper{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 150px;
+}
+
+#supportHero input{
+  padding: 20px 50px;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 10px;
+  border: none;
+}
