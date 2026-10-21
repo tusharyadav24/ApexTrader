@@ -1,22 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Pricing() {
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-4">
+      <div className="row align-items-center py-5">
+        <div className="col-md-4">
           <h1 className="mb-3 fs-2">Unbeatable pricing</h1>
           <p>
             We pioneered the concept of discount broking and price transparency
             in India. Flat fees and no hidden charges.
           </p>
-          <a href="sa" style={{ textDecoration: "none" }}>
+          <Link to="/pricing" style={{ textDecoration: "none" }}>
             See Pricing{" "}
-            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-          </a>
+            <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+          </Link>
         </div>
-        <div className="col-2"></div>
-        <div className="col-6  mb-5">
+        <div className="col-md-2"></div>
+        <div className="col-md-6 mb-5">
           <div className="row text-center">
             <div className="col p-3 border">
               <h1 className="mb-3">₹0</h1>
@@ -28,7 +29,7 @@ function Pricing() {
             </div>
             <div className="col p-3 border">
               <h1 className="mb-3">₹20</h1>
-              <p>Intraday and F&O</p>
+              <p>Intraday and F&amp;O</p>
             </div>
           </div>
         </div>

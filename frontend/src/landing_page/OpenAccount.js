@@ -1,20 +1,22 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function OpenAccount() {
   return (
     <div className="container p-5 mb-5">
       <div className="row text-center">
-        <h1 className="mt-5">Open a ApexTrader account</h1>
+        <h1 className="mt-5">Open an ApexTrader account</h1>
         <p>
           Modern platforms and apps, ₹0 investments, and flat ₹20 intraday and
-          F&O trades.
+          F&amp;O trades.
         </p>
-        <button
-          className="p-2 btn btn-primary fs-5 mb-5"
-          style={{ width: "20%", margin: "0 auto" }}
+        <Link
+          to="/signup"
+          className="btn btn-primary fs-5 mb-5 mx-auto"
+          style={{ width: "fit-content", padding: "12px 32px" }}
         >
           Sign up Now
-        </button>
+        </Link>
       </div>
     </div>
   );

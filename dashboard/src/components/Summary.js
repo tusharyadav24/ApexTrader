@@ -1,10 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Summary = () => {
+  const [holdings, setHoldings] = useState([]);
+  const [positions, setPositions] = useState([]);
+  const [username, setUsername] = useState("User");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3002/me", { withCredentials: true })
+      .then((res) => setUsername(res.data.user?.username || "User"))
+      .catch(() => {});
+
+    axios
+      .get("http://localhost:3002/allHoldings", { withCredentials: true })
+      .then((res) => setHoldings(res.data))
+      .catch(() => {});
+
+    axios
+      .get("http://localhost:3002/allPositions", { withCredentials: true })
+      .then((res) => setPositions(res.data))
+      .catch(() => {});
+  }, []);
+
+  const totalInvestment = holdings.reduce((s, h) => s + h.avg * h.qty, 0);
+  const totalCurrent = holdings.reduce((s, h) => s + h.price * h.qty, 0);
+  const totalPnL = totalCurrent - totalInvestment;
+  const pnlPercent =
+    totalInvestment > 0
+      ? ((totalPnL / totalInvestment) * 100).toFixed(2)
+      : "0.00";
+
+  const formatCurrency = (val) => {
+    const abs = Math.abs(val);
+    if (abs >= 1e5) return `${(abs / 1e5).toFixed(2)}L`;
+    if (abs >= 1e3) return `${(abs / 1e3).toFixed(2)}k`;
+    return abs.toFixed(2);
+  };
+
   return (
     <>
       <div className="username">
-        <h6>Hi, User!</h6>
+        <h6>Hi, {username}!</h6>
         <hr className="divider" />
       </div>
 
@@ -34,13 +71,17 @@ const Summary = () => {
 
       <div className="section">
         <span>
-          <p>Holdings (13)</p>
+          <p>Holdings ({holdings.length})</p>
         </span>
 
         <div className="data">
           <div className="first">
-            <h3 className="profit">
-              1.55k <small>+5.20%</small>{" "}
+            <h3 className={totalPnL >= 0 ? "profit" : "loss"}>
+              {formatCurrency(totalPnL)}{" "}
+              <small className={totalPnL >= 0 ? "" : "loss"}>
+                {totalPnL >= 0 ? "+" : ""}
+                {pnlPercent}%
+              </small>{" "}
             </h3>
             <p>P&L</p>
           </div>
@@ -48,15 +89,29 @@ const Summary = () => {
 
           <div className="second">
             <p>
-              Current Value <span>31.43k</span>{" "}
+              Current Value <span>{formatCurrency(totalCurrent)}</span>{" "}
             </p>
             <p>
-              Investment <span>29.88k</span>{" "}
+              Investment <span>{formatCurrency(totalInvestment)}</span>{" "}
             </p>
           </div>
         </div>
         <hr className="divider" />
       </div>
+
+      {positions.length > 0 && (
+        <div className="section">
+          <span>
+            <p>Positions ({positions.length})</p>
+          </span>
+          <div className="data">
+            <div className="second">
+              <p>Open positions today</p>
+            </div>
+          </div>
+          <hr className="divider" />
+        </div>
+      )}
     </>
   );
 };

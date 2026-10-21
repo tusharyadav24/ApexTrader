@@ -1,17 +1,12 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
+
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg border-bottom bg-white " >
+    <nav className="navbar navbar-expand-lg border-bottom bg-white">
       <div className="container py-2">
-        <Link className="navbar-brand" to="/">
-          <img
-            src="/assets/logo.svg"
-            alt="ApexTrade"
-            style={{width:"100%"}}
-            className="navbar-logo"
-          />
+        <Link className="navbar-brand fw-bold" to="/" style={{ color: "rgb(245,104,52)", fontSize: "1.3rem" }}>
+          ApexTrader
         </Link>
 
         <button
@@ -32,19 +27,46 @@ function Navbar() {
         >
           <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-3">
             <li className="nav-item">
-              <Link className="nav-link" to="/signup">Signup</Link>
+              <Link className="nav-link" to="/signup">
+                Signup
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">About</Link>
+              <Link className="nav-link" to="/about">
+                About
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/products">Products</Link>
+              <Link className="nav-link" to="/products">
+                Products
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/pricing">Pricing</Link>
+              <Link className="nav-link" to="/pricing">
+                Pricing
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/support">Support</Link>
+              <Link className="nav-link" to="/support">
+                Support
+              </Link>
+            </li>
+            <li className="nav-item">
+              <a
+                href="http://localhost:3001"
+                className="btn btn-sm px-3 py-2"
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  background: "rgb(245,104,52)",
+                  color: "#fff",
+                  borderRadius: "4px",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                }}
+              >
+                Dashboard
+              </a>
             </li>
           </ul>
         </div>

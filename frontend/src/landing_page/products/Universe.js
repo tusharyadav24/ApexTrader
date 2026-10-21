@@ -10,47 +10,85 @@ function Universe() {
           partner platforms
         </p>
 
-<div className="container pt-5">
-  <div className="row">
-    
-    <div className="col-4 p-3 mt-5">
-      <img src="/assets/smallcaseLogo.png" alt="" className="img-fluid" />
-      <p className="text-small text-muted">Thematic investment platform</p>
-    </div>
+        <div className="container pt-5">
+          <div className="row justify-content-center">
+            <div className="col-md-4 col-6 p-3 mt-5">
+              <img
+                src="/assets/smallcaseLogo.png"
+                alt="Smallcase"
+                className="img-fluid"
+                style={{ maxHeight: "40px", objectFit: "contain" }}
+              />
+              <p className="text-small text-muted mt-2">
+                Thematic investment platform
+              </p>
+            </div>
 
-    <div className="col-4 p-3 mt-5">
-      <img src="/assets/streakLogo.png" alt="" className="img-fluid" style={{width:"40%"}}/>
-      <p className="text-small text-muted">Algo & strategy platform</p>
-    </div>
+            <div className="col-md-4 col-6 p-3 mt-5">
+              <img
+                src="/assets/streakLogo.png"
+                alt="Streak"
+                className="img-fluid"
+                style={{ maxHeight: "40px", objectFit: "contain" }}
+              />
+              <p className="text-small text-muted mt-2">
+                Algo &amp; strategy platform
+              </p>
+            </div>
 
-    <div className="col-4 p-3 mt-5">
-      <img src="/assets/sensibullLogo.svg" alt="" className="img-fluid" style={{width:"40%"}}/>
-      <p className="text-small text-muted">Options trading platform</p>
-    </div>
+            <div className="col-md-4 col-6 p-3 mt-5">
+              <img
+                src="/assets/sensibullLogo.svg"
+                alt="Sensibull"
+                className="img-fluid"
+                style={{ maxHeight: "40px", objectFit: "contain" }}
+              />
+              <p className="text-small text-muted mt-2">
+                Options trading platform
+              </p>
+            </div>
 
-    <div className="col-4 p-3 mt-5">
-      <img src="/assets/ApexTraderFundHouse.png" alt="" className="img-fluid" style={{width:"40%"}}/>
-      <p className="text-small text-muted">Asset management</p>
-    </div>
+            <div className="col-md-4 col-6 p-3 mt-5">
+              <img
+                src="/assets/ApexTraderFundHouse.png"
+                alt="ApexTrader Fund House"
+                className="img-fluid"
+                style={{ maxHeight: "40px", objectFit: "contain" }}
+              />
+              <p className="text-small text-muted mt-2">Asset management</p>
+            </div>
 
-    <div className="col-4 p-3 mt-5">
-      <img src="/assets/goldenpiLogo.png" alt="" className="img-fluid" style={{width:"40%"}}/>
-      <p className="text-small text-muted">Bonds trading platform</p>
-    </div>
+            <div className="col-md-4 col-6 p-3 mt-5">
+              <img
+                src="/assets/goldenpiLogo.png"
+                alt="GoldenPi"
+                className="img-fluid"
+                style={{ maxHeight: "40px", objectFit: "contain" }}
+              />
+              <p className="text-small text-muted mt-2">
+                Bonds trading platform
+              </p>
+            </div>
 
-    <div className="col-4 p-3 mt-5">
-      <img src="/assets/dittoLogo.png" alt="" className="img-fluid" style={{width:"40%"}}/>
-      <p className="text-small text-muted">Insurance advisory</p>
-    </div>
-
-  </div>
-</div>
-        <button
-          className="p-2 btn btn-primary fs-5 mb-5"
-          style={{ width: "20%", margin: "0 auto" }}
-        >
-          Signup Now
-        </button>
+            <div className="col-md-4 col-6 p-3 mt-5">
+              <img
+                src="/assets/dittoLogo.png"
+                alt="Ditto"
+                className="img-fluid"
+                style={{ maxHeight: "40px", objectFit: "contain" }}
+              />
+              <p className="text-small text-muted mt-2">Insurance advisory</p>
+            </div>
+          </div>
+        </div>
+        <div className="mt-5 mb-5">
+          <a
+            href="/signup"
+            className="btn btn-primary fs-5 px-4 py-2"
+          >
+            Signup Now
+          </a>
+        </div>
       </div>
     </div>
   );

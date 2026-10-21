@@ -2,219 +2,248 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
-
 const cors = require("cors");
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const { MongoStore } = require('connect-mongo');
 
 const { HoldingsModel } = require("./models/HoldingsModel");
-
 const { PositionsModel } = require("./models/PositionsModel");
 const { OrdersModel } = require("./models/OrdersModel");
+const UserModel = require("./models/UserModel");
 
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 
 const app = express();
 
-app.use(cors());
-app.use(express.urlencoded({extended:true}));
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:3001"],
+    credentials: true,
+  })
+);
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+];
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "apextrader_secret_key_2024",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: uri
+    }),
+    cookie: {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    },
+  })
+);
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// app.get("/addHoldings", async (req, res) => {
-//   let tempHoldings = [
-//     {
-//       name: "BHARTIARTL",
-//       qty: 2,
-//       avg: 538.05,
-//       price: 541.15,
-//       net: "+0.58%",
-//       day: "+2.99%",
-//     },
-//     {
-//       name: "HDFCBANK",
-//       qty: 2,
-//       avg: 1383.4,
-//       price: 1522.35,
-//       net: "+10.04%",
-//       day: "+0.11%",
-//     },
-//     {
-//       name: "HINDUNILVR",
-//       qty: 1,
-//       avg: 2335.85,
-//       price: 2417.4,
-//       net: "+3.49%",
-//       day: "+0.21%",
-//     },
-//     {
-//       name: "INFY",
-//       qty: 1,
-//       avg: 1350.5,
-//       price: 1555.45,
-//       net: "+15.18%",
-//       day: "-1.60%",
-//       isLoss: true,
-//     },
-//     {
-//       name: "ITC",
-//       qty: 5,
-//       avg: 202.0,
-//       price: 207.9,
-//       net: "+2.92%",
-//       day: "+0.80%",
-//     },
-//     {
-//       name: "KPITTECH",
-//       qty: 5,
-//       avg: 250.3,
-//       price: 266.45,
-//       net: "+6.45%",
-//       day: "+3.54%",
-//     },
-//     {
-//       name: "M&M",
-//       qty: 2,
-//       avg: 809.9,
-//       price: 779.8,
-//       net: "-3.72%",
-//       day: "-0.01%",
-//       isLoss: true,
-//     },
-//     {
-//       name: "RELIANCE",
-//       qty: 1,
-//       avg: 2193.7,
-//       price: 2112.4,
-//       net: "-3.71%",
-//       day: "+1.44%",
-//     },
-//     {
-//       name: "SBIN",
-//       qty: 4,
-//       avg: 324.35,
-//       price: 430.2,
-//       net: "+32.63%",
-//       day: "-0.34%",
-//       isLoss: true,
-//     },
-//     {
-//       name: "SGBMAY29",
-//       qty: 2,
-//       avg: 4727.0,
-//       price: 4719.0,
-//       net: "-0.17%",
-//       day: "+0.15%",
-//     },
-//     {
-//       name: "TATAPOWER",
-//       qty: 5,
-//       avg: 104.2,
-//       price: 124.15,
-//       net: "+19.15%",
-//       day: "-0.24%",
-//       isLoss: true,
-//     },
-//     {
-//       name: "TCS",
-//       qty: 1,
-//       avg: 3041.7,
-//       price: 3194.8,
-//       net: "+5.03%",
-//       day: "-0.25%",
-//       isLoss: true,
-//     },
-//     {
-//       name: "WIPRO",
-//       qty: 4,
-//       avg: 489.3,
-//       price: 577.75,
-//       net: "+18.08%",
-//       day: "+0.32%",
-//     },
-//   ];
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "apextrader_secret_key_2024",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: uri }),
+    cookie: {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    },
+  })
+);
 
-//   tempHoldings.forEach((item) => {
-//     let newHolding = new HoldingsModel({
-//       name: item.name,
-//       qty: item.qty,
-//       avg: item.avg,
-//       price: item.price,
-//       net: item.day,
-//       day: item.day,
-//     });
+app.use(passport.initialize());
+app.use(passport.session());
 
-//     newHolding.save();
-//   });
-//   res.send("Done!");
-// });
+passport.use(new LocalStrategy(UserModel.authenticate()));
+passport.serializeUser(UserModel.serializeUser());
+passport.deserializeUser(UserModel.deserializeUser());
 
-// app.get("/addPositions", async (req, res) => {
-//   let tempPositions = [
-//     {
-//       product: "CNC",
-//       name: "EVEREADY",
-//       qty: 2,
-//       avg: 316.27,
-//       price: 312.35,
-//       net: "+0.58%",
-//       day: "-1.24%",
-//       isLoss: true,
-//     },
-//     {
-//       product: "CNC",
-//       name: "JUBLFOOD",
-//       qty: 1,
-//       avg: 3124.75,
-//       price: 3082.65,
-//       net: "+10.04%",
-//       day: "-1.35%",
-//       isLoss: true,
-//     },
-//   ];
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  return res.status(401).json({ message: "Unauthorized. Please log in." });
+};
 
-//   tempPositions.forEach((item) => {
-//     let newPosition = new PositionsModel({
-//       product: item.product,
-//       name: item.name,
-//       qty: item.qty,
-//       avg: item.avg,
-//       price: item.price,
-//       net: item.net,
-//       day: item.day,
-//       isLoss: item.isLoss,
-//     });
-
-//     newPosition.save();
-//   });
-//   res.send("Done!");
-// });
-
-app.get("/allHoldings", async (req, res) => {
-  let allHoldings = await HoldingsModel.find({});
-  res.json(allHoldings);
+app.post("/register", async (req, res) => {
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+  try {
+    const existingUser = await UserModel.findOne({
+      $or: [{ username }, { email }],
+    });
+    if (existingUser) {
+      return res
+        .status(409)
+        .json({ message: "Username or email already exists." });
+    }
+    const newUser = new UserModel({ username, email });
+    await UserModel.register(newUser, password);
+    res.status(201).json({ message: "Registration successful. Please log in." });
+  } catch (err) {
+    res.status(500).json({ message: "Registration failed.", error: err.message });
+  }
 });
 
-app.get("/allPositions", async (req, res) => {
-  let allPositions = await PositionsModel.find({});
-  res.json(allPositions);
+app.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return res.status(500).json({ message: "Authentication error." });
+    }
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: info?.message || "Invalid credentials." });
+    }
+    req.logIn(user, (loginErr) => {
+      if (loginErr) {
+        return res.status(500).json({ message: "Login failed." });
+      }
+      return res.json({
+        message: "Login successful.",
+        user: { username: user.username, email: user.email },
+      });
+    });
+  })(req, res, next);
 });
 
-app.post("/newOrder", async (req, res) => {
-  let newOrder = new OrdersModel({
-    name: req.body.name,
-    qty: req.body.qty,
-    price: req.body.price,
-    mode: req.body.mode,
+app.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    req.session.destroy(() => {
+      res.json({ message: "Logged out successfully." });
+    });
   });
-
-  newOrder.save();
-
-  res.send("Order saved!");
 });
 
-mongoose.connect(uri)
+app.get("/me", isLoggedIn, (req, res) => {
+  res.json({ user: { username: req.user.username, email: req.user.email } });
+});
+
+app.get("/allHoldings", isLoggedIn, async (req, res) => {
+  try {
+    const allHoldings = await HoldingsModel.find({});
+    res.json(allHoldings);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch holdings." });
+  }
+});
+
+app.post("/addHolding", isLoggedIn, async (req, res) => {
+  const { name, qty, avg, price, net, day } = req.body;
+  if (!name || !qty || !avg || !price) {
+    return res.status(400).json({ message: "Missing required fields." });
+  }
+  try {
+    const newHolding = new HoldingsModel({ name, qty, avg, price, net, day });
+    await newHolding.save();
+    res.status(201).json({ message: "Holding added.", holding: newHolding });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to add holding." });
+  }
+});
+
+app.delete("/deleteHolding/:id", isLoggedIn, async (req, res) => {
+  try {
+    await HoldingsModel.findByIdAndDelete(req.params.id);
+    res.json({ message: "Holding deleted." });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to delete holding." });
+  }
+});
+
+app.get("/allPositions", isLoggedIn, async (req, res) => {
+  try {
+    const allPositions = await PositionsModel.find({});
+    res.json(allPositions);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch positions." });
+  }
+});
+
+app.post("/addPosition", isLoggedIn, async (req, res) => {
+  const { product, name, qty, avg, price, net, day, isLoss } = req.body;
+  if (!name || !qty || !avg || !price) {
+    return res.status(400).json({ message: "Missing required fields." });
+  }
+  try {
+    const newPosition = new PositionsModel({
+      product,
+      name,
+      qty,
+      avg,
+      price,
+      net,
+      day,
+      isLoss,
+    });
+    await newPosition.save();
+    res.status(201).json({ message: "Position added.", position: newPosition });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to add position." });
+  }
+});
+
+app.delete("/deletePosition/:id", isLoggedIn, async (req, res) => {
+  try {
+    await PositionsModel.findByIdAndDelete(req.params.id);
+    res.json({ message: "Position deleted." });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to delete position." });
+  }
+});
+
+app.get("/allOrders", isLoggedIn, async (req, res) => {
+  try {
+    const allOrders = await OrdersModel.find({}).sort({ _id: -1 });
+    res.json(allOrders);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch orders." });
+  }
+});
+
+app.post("/newOrder", isLoggedIn, async (req, res) => {
+  const { name, qty, price, mode } = req.body;
+  if (!name || !qty || !mode) {
+    return res.status(400).json({ message: "Missing required fields." });
+  }
+  try {
+    const newOrder = new OrdersModel({ name, qty, price, mode });
+    await newOrder.save();
+    res.status(201).json({ message: "Order saved.", order: newOrder });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to save order." });
+  }
+});
+
+app.delete("/deleteOrder/:id", isLoggedIn, async (req, res) => {
+  try {
+    await OrdersModel.findByIdAndDelete(req.params.id);
+    res.json({ message: "Order deleted." });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to delete order." });
+  }
+});
+
+mongoose
+  .connect(uri)
   .then(() => console.log("MongoDB connected successfully!"))
   .catch((err) => console.log("DB connection error:", err));
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`ApexTrader server running on port ${PORT}`);
 });

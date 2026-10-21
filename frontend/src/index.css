@@ -7,15 +7,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.sign-up-btn{
+
+.sign-up-btn {
   background-color: rgb(87, 87, 217) !important;
-  width: 15%;
+  width: auto;
+  min-width: 160px;
   margin: auto;
-  padding: 10px !important;
+  padding: 12px 32px !important;
 }
 
 .navbar {
-  min-height: 88px;
+  min-height: 72px;
   padding: 0;
 }
 
@@ -37,7 +39,7 @@ code {
 }
 
 .navbar .nav-link:hover {
-  color: #387ed1;
+  color: rgb(245, 104, 52);
 }
 
 @media (min-width: 992px) {
@@ -52,7 +54,7 @@ code {
 
 @media (max-width: 991.98px) {
   .navbar-logo {
-    width: 155px;
+    width: 140px;
   }
 
   .navbar .navbar-nav {
@@ -60,25 +62,67 @@ code {
     align-items: flex-start;
   }
 }
-#supportHero{
+
+#supportHero {
   background-color: rgb(56, 126, 209);
   color: white;
 }
 
-#supportHero a{
+#supportHero a {
   color: white;
 }
 
-#supportWrapper{
+#supportWrapper {
   display: flex;
   justify-content: space-between;
   margin: 0 150px;
 }
 
-#supportHero input{
-  padding: 20px 50px;
+#supportHero input {
+  padding: 16px 40px;
   width: 100%;
-  font-size: 20px;
-  border-radius: 10px;
+  font-size: 18px;
+  border-radius: 8px;
   border: none;
+}
+
+@media (max-width: 768px) {
+  #supportWrapper {
+    margin: 0 20px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #supportHero input {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+
+  .col-6 {
+    width: 100%;
+  }
+
+  .sign-up-btn {
+    width: 80% !important;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 576px) {
+  h1.fs-2 {
+    font-size: 1.4rem !important;
+  }
+
+  .navbar-brand {
+    font-size: 1.1rem !important;
+  }
+
+  footer .row {
+    flex-direction: column;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-const Menu = () => {
+const Menu = ({ user, onLogout }) => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
@@ -10,16 +10,34 @@ const Menu = () => {
     setSelectedMenu(index);
   };
 
-  const handleProfileClick = (index) => {
+  const handleProfileClick = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await axios.get("http://localhost:3002/logout", {
+        withCredentials: true,
+      });
+      onLogout();
+    } catch (err) {
+      onLogout();
+    }
   };
 
   const menuClass = "menu";
   const activeMenuClass = "menu selected";
 
+  const getInitials = (username) => {
+    if (!username) return "AT";
+    return username.slice(0, 2).toUpperCase();
+  };
+
   return (
     <div className="menu-container">
-      <img src="logo.svg" alt=""/>
+      <div className="brand-logo">
+        <span className="brand-text">ApexTrader</span>
+      </div>
       <div className="menus">
         <ul>
           <li>
@@ -69,7 +87,7 @@ const Menu = () => {
           <li>
             <Link
               style={{ textDecoration: "none" }}
-              to="funds"
+              to="/funds"
               onClick={() => handleMenuClick(4)}
             >
               <p className={selectedMenu === 4 ? activeMenuClass : menuClass}>
@@ -77,23 +95,21 @@ const Menu = () => {
               </p>
             </Link>
           </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/apps"
-              onClick={() => handleMenuClick(6)}
-            >
-              <p className={selectedMenu === 6 ? activeMenuClass : menuClass}>
-                Apps
-              </p>
-            </Link>
-          </li>
         </ul>
         <hr />
         <div className="profile" onClick={handleProfileClick}>
-          <div className="avatar">ZU</div>
-          <p className="username">USERID</p>
+          <div className="avatar">{getInitials(user?.username)}</div>
+          <p className="username">{user?.username || "User"}</p>
         </div>
+        {isProfileDropdownOpen && (
+          <div className="profile-dropdown">
+            <p className="dropdown-email">{user?.email || ""}</p>
+            <hr className="dropdown-divider" />
+            <button className="dropdown-logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

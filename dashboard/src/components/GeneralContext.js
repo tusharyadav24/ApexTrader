@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import BuyActionWindow from "./BuyActionWindow";
 
 const GeneralContext = React.createContext({
