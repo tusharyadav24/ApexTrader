@@ -31,7 +31,7 @@ function Signup() {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:3002/register", {
+      await axios.post("https://apextrader-backend.onrender.com/register", {
         username: form.username,
         email: form.email,
         password: form.password,
@@ -164,7 +164,7 @@ function Signup() {
             >
               Already have an account?{" "}
               <a
-                href="http://localhost:3001"
+                href="https://apextrader-dashboard.onrender.com"
                 target="_blank"
                 rel="noreferrer"
                 style={{ color: "rgb(65,132,243)" }}
