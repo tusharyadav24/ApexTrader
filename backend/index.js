@@ -20,7 +20,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://apextrader-frontend-1.onrender.com/", "https://apextrader-dashboard-1.onrender.com/"],
+    origin: ["https://apextrader-frontend-1.onrender.com", "https://apextrader-dashboard-1.onrender.com"],
     credentials: true,
   })
 );
