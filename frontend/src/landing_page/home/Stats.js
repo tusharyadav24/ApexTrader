@@ -37,7 +37,7 @@ function Stats() {
               <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
             </Link>
             <a
-              href="http://localhost:3001"
+              href="https://apextrader-dashboard-1.onrender.com"
               target="_blank"
               rel="noreferrer"
               style={{ textDecoration: "none" }}

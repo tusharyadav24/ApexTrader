@@ -53,7 +53,7 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <a
-                href="https://apextrader-dashboard.onrender.com"
+                href="https://apextrader-dashboard-1.onrender.com"
                 className="btn btn-sm px-3 py-2"
                 target="_blank"
                 rel="noreferrer"
