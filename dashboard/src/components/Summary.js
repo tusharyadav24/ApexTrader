@@ -8,17 +8,17 @@ const Summary = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/me", { withCredentials: true })
+      .get("https://apextrader-backend.onrender.com/me", { withCredentials: true })
       .then((res) => setUsername(res.data.user?.username || "User"))
       .catch(() => {});
 
     axios
-      .get("http://localhost:3002/allHoldings", { withCredentials: true })
+      .get("https://apextrader-backend.onrender.com/allHoldings", { withCredentials: true })
       .then((res) => setHoldings(res.data))
       .catch(() => {});
 
     axios
-      .get("http://localhost:3002/allPositions", { withCredentials: true })
+      .get("https://apextrader-backend.onrender.com/allPositions", { withCredentials: true })
       .then((res) => setPositions(res.data))
       .catch(() => {});
   }, []);

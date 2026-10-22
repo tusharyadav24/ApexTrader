@@ -8,7 +8,7 @@ const Positions = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/allPositions", { withCredentials: true })
+      .get("https://apextrader-backend.onrender.com/allPositions", { withCredentials: true })
       .then((res) => {
         setAllPositions(res.data);
         setLoading(false);

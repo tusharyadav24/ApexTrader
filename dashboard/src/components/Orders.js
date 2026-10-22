@@ -8,7 +8,7 @@ const Orders = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/allOrders", { withCredentials: true })
+      .get("https://apextrader-backend.onrender.com/allOrders", { withCredentials: true })
       .then((res) => {
         setOrders(res.data);
         setLoading(false);
@@ -21,7 +21,7 @@ const Orders = () => {
 
   const handleDeleteOrder = async (id) => {
     try {
-      await axios.delete(`http://localhost:3002/deleteOrder/${id}`, {
+      await axios.delete(`https://apextrader-backend.onrender.com/deleteOrder/${id}`, {
         withCredentials: true,
       });
       setOrders((prev) => prev.filter((o) => o._id !== id));

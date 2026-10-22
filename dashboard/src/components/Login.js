@@ -13,7 +13,7 @@ const Login = ({ onLoginSuccess }) => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:3002/login",
+        "https://apextrader-backend.onrender.com/login",
         { username, password },
         { withCredentials: true }
       );
@@ -65,7 +65,7 @@ const Login = ({ onLoginSuccess }) => {
         </form>
         <p className="login-footer">
           Don't have an account?{" "}
-          <a href="http://localhost:3000/signup" target="_blank" rel="noreferrer">
+          <a href="https://apextrader-backend.onrender.com/signup" target="_blank" rel="noreferrer">
             Open account
           </a>
         </p>

@@ -10,7 +10,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/me", { withCredentials: true })
+      .get("https://apextrader-backend.onrender.com/me", { withCredentials: true })
       .then((res) => {
         setUser(res.data.user);
         setChecking(false);

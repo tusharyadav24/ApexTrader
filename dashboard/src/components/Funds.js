@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 const Funds = () => {
   const [availableMargin] = React.useState(4043.1);

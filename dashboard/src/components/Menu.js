@@ -16,7 +16,7 @@ const Menu = ({ user, onLogout }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:3002/logout", {
+      await axios.get("https://apextrader-backend.onrender.com/logout", {
         withCredentials: true,
       });
       onLogout();

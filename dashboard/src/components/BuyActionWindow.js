@@ -15,7 +15,7 @@ const BuyActionWindow = ({ uid }) => {
     setLoading(true);
     try {
       await axios.post(
-        "http://localhost:3002/newOrder",
+        "https://apextrader-backend.onrender.com/newOrder",
         {
           name: uid,
           qty: stockQuantity,
