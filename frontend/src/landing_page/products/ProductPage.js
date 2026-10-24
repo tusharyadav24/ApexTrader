@@ -33,7 +33,7 @@ function ProductPage() {
               experience seamlessly on your Android and iOS devices.
             </p>
             <div>
-              <a href="http://localhost:3001" target="_blank" rel="noreferrer">
+              <a href="https://apextrader-dashboard-1.onrender.com" target="_blank" rel="noreferrer">
                 Try Demo
               </a>
               <Link to="/products" style={{ marginLeft: "50px" }}>
@@ -66,7 +66,7 @@ function ProductPage() {
               visualisations.
             </p>
             <div>
-              <a href="http://localhost:3001" target="_blank" rel="noreferrer">
+              <a href="https://apextrader-dashboard-1.onrender.com" target="_blank" rel="noreferrer">
                 Learn More
               </a>
             </div>
