@@ -164,7 +164,7 @@ function Signup() {
             >
               Already have an account?{" "}
               <a
-                href="https://apextrader-dashboard.onrender.com"
+                href="https://apextrader-dashboard-1.onrender.com"
                 target="_blank"
                 rel="noreferrer"
                 style={{ color: "rgb(65,132,243)" }}
