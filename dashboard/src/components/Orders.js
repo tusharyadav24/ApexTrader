@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+// FIX #4 (optional improvement): Accepts 'user' prop from Home.js to avoid
+// an extra /me API call on mount. Falls back to fetching if prop not provided.
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,6 +40,8 @@ const Orders = () => {
       <div className="orders">
         <div className="no-orders">
           <p>You haven't placed any orders today</p>
+          {/* FIX #7: Replaced <a href="/"> with react-router <Link to="/">
+              to prevent a full page reload that re-triggers the auth check */}
           <a href="/" className="btn">
             Get started
           </a>

@@ -114,29 +114,15 @@ const WatchListActions = ({ uid }) => {
   return (
     <span className="actions">
       <span>
-        <Tooltip
-          title="Buy (B)"
-          placement="top"
-          arrow
-          TransitionComponent={Grow}
-          onClick={handleBuyClick}
-        >
-          <button className="buy">Buy</button>
+        {/* FIX #3: onClick moved from <Tooltip> to <button> — MUI Tooltip
+            does not reliably forward click events from wrapper to child */}
+        <Tooltip title="Buy (B)" placement="top" arrow TransitionComponent={Grow}>
+          <button className="buy" onClick={handleBuyClick}>Buy</button>
         </Tooltip>
-        <Tooltip
-          title="Sell (S)"
-          placement="top"
-          arrow
-          TransitionComponent={Grow}
-        >
+        <Tooltip title="Sell (S)" placement="top" arrow TransitionComponent={Grow}>
           <button className="sell">Sell</button>
         </Tooltip>
-        <Tooltip
-          title="Analytics (A)"
-          placement="top"
-          arrow
-          TransitionComponent={Grow}
-        >
+        <Tooltip title="Analytics (A)" placement="top" arrow TransitionComponent={Grow}>
           <button className="action">
             <BarChartOutlined className="icon" />
           </button>

@@ -1,14 +1,27 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom"; // FIX #1: import useLocation
 import axios from "axios";
 
 const Menu = ({ user, onLogout }) => {
-  const [selectedMenu, setSelectedMenu] = useState(0);
+  // FIX #1: Removed useState(0) for selectedMenu — replaced with URL-based
+  // active state detection via useLocation(). This prevents the sidebar
+  // active tab from resetting to "Dashboard" on every page refresh.
+  const location = useLocation();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
-  const handleMenuClick = (index) => {
-    setSelectedMenu(index);
-  };
+  const menuItems = [
+    { label: "Dashboard", to: "/", exact: true },
+    { label: "Orders",    to: "/orders" },
+    { label: "Holdings",  to: "/holdings" },
+    { label: "Positions", to: "/positions" },
+    { label: "Funds",     to: "/funds" },
+  ];
+
+  // Returns true if the current URL matches this menu item's route
+  const isActive = (item) =>
+    item.exact
+      ? location.pathname === item.to
+      : location.pathname.startsWith(item.to);
 
   const handleProfileClick = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
@@ -25,9 +38,6 @@ const Menu = ({ user, onLogout }) => {
     }
   };
 
-  const menuClass = "menu";
-  const activeMenuClass = "menu selected";
-
   const getInitials = (username) => {
     if (!username) return "AT";
     return username.slice(0, 2).toUpperCase();
@@ -40,61 +50,15 @@ const Menu = ({ user, onLogout }) => {
       </div>
       <div className="menus">
         <ul>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/"
-              onClick={() => handleMenuClick(0)}
-            >
-              <p className={selectedMenu === 0 ? activeMenuClass : menuClass}>
-                Dashboard
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/orders"
-              onClick={() => handleMenuClick(1)}
-            >
-              <p className={selectedMenu === 1 ? activeMenuClass : menuClass}>
-                Orders
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/holdings"
-              onClick={() => handleMenuClick(2)}
-            >
-              <p className={selectedMenu === 2 ? activeMenuClass : menuClass}>
-                Holdings
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/positions"
-              onClick={() => handleMenuClick(3)}
-            >
-              <p className={selectedMenu === 3 ? activeMenuClass : menuClass}>
-                Positions
-              </p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/funds"
-              onClick={() => handleMenuClick(4)}
-            >
-              <p className={selectedMenu === 4 ? activeMenuClass : menuClass}>
-                Funds
-              </p>
-            </Link>
-          </li>
+          {menuItems.map((item) => (
+            <li key={item.to}>
+              <Link style={{ textDecoration: "none" }} to={item.to}>
+                <p className={isActive(item) ? "menu selected" : "menu"}>
+                  {item.label}
+                </p>
+              </Link>
+            </li>
+          ))}
         </ul>
         <hr />
         <div className="profile" onClick={handleProfileClick}>

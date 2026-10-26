@@ -65,7 +65,14 @@ const Login = ({ onLoginSuccess }) => {
         </form>
         <p className="login-footer">
           Don't have an account?{" "}
-          <a href="https://apextrader-backend.onrender.com/signup" target="_blank" rel="noreferrer">
+          {/* FIX #9: Was pointing to https://apextrader-backend.onrender.com/signup
+              (a backend URL with no such route). Now correctly links to the
+              frontend signup page. */}
+          <a
+            href="https://apextrader-frontend-1.onrender.com/signup"
+            target="_blank"
+            rel="noreferrer"
+          >
             Open account
           </a>
         </p>
