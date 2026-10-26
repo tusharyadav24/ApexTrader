@@ -15,48 +15,58 @@ const UserModel = require("./models/UserModel");
 
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
+const isProduction = process.env.NODE_ENV === "production";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: ["https://apextrader-frontend-1.onrender.com", "https://apextrader-dashboard-1.onrender.com"],
-    credentials: true,
-  })
-);
-
+// FIX #6: Combined all allowed origins into a single dynamic CORS config.
+// Previously, localhost origins were declared in a variable that was never
+// used, causing CORS errors during local development.
 const allowedOrigins = [
+  "https://apextrader-frontend-1.onrender.com",
+  "https://apextrader-dashboard-1.onrender.com",
   "http://localhost:3000",
   "http://localhost:3001",
 ];
 
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "apextrader_secret_key_2024",
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: uri
-    }),
-    cookie: {
-      httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g. mobile apps, curl, server-to-server)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS: " + origin));
+      }
     },
+    credentials: true,
   })
 );
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// FIX #5: Removed the duplicate session() registration that was present below.
+// Having session middleware registered twice causes double session processing,
+// potential auth failures, and redundant MongoDB store writes.
+//
+// FIX #6 (continued): Added `secure` and `sameSite` cookie flags required for
+// cross-origin cookie-based auth between Render subdomains. Without these,
+// browsers silently drop the session cookie on all cross-origin requests,
+// making every authenticated route return 401.
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "apextrader_secret_key_2024",
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: uri }),
+    store: MongoStore.create({
+      mongoUrl: uri,
+    }),
     cookie: {
       httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: isProduction,              // HTTPS-only in production
+      sameSite: isProduction ? "none" : "lax", // Required for cross-site cookies
+      maxAge: 7 * 24 * 60 * 60 * 1000,  // 7 days
     },
   })
 );
