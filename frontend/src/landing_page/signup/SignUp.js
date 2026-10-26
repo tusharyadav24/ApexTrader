@@ -12,6 +12,14 @@ function Signup() {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const API_BASE_URL =
+    process.env.REACT_APP_API_URL ||
+    (typeof window !== "undefined" &&
+    (window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1")
+      ? "http://localhost:3002"
+      : "https://apextrader-backend.onrender.com");
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -31,13 +39,17 @@ function Signup() {
 
     setLoading(true);
     try {
-      await axios.post("https://apextrader-backend.onrender.com/register", {
-        username: form.username,
-        email: form.email,
-        password: form.password,
-      },{
-        withCredentials:true
-      });
+      await axios.post(
+        `${API_BASE_URL}/register`,
+        {
+          username: form.username,
+          email: form.email,
+          password: form.password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       setSuccess(
         "Account created successfully! You can now log in to the dashboard."
       );
