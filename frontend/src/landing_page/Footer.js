@@ -64,9 +64,16 @@ function Footer() {
             <Link to="/signup" className="d-block text-muted text-decoration-none mb-2">
               Open an account
             </Link>
-            <Link to="/funds" className="d-block text-muted text-decoration-none mb-2">
+            {/* FIX #8: /funds does not exist in the frontend app — it lives in the
+                dashboard. Using a plain <a> to link to the dashboard /funds page. */}
+            <a
+              href="https://apextrader-dashboard-1.onrender.com/funds"
+              target="_blank"
+              rel="noreferrer"
+              className="d-block text-muted text-decoration-none mb-2"
+            >
               Fund transfer
-            </Link>
+            </a>
             <Link to="/support" className="d-block text-muted text-decoration-none mb-2">
               60 day challenge
             </Link>
