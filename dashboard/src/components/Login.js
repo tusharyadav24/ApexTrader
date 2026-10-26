@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState("");
@@ -12,11 +12,7 @@ const Login = ({ onLoginSuccess }) => {
     setError("");
     setLoading(true);
     try {
-      const res = await axios.post(
-        "https://apextrader-backend.onrender.com/login",
-        { username, password },
-        { withCredentials: true }
-      );
+      const res = await api.post("/login", { username, password });
       onLoginSuccess(res.data.user);
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Try again.");
@@ -65,9 +61,6 @@ const Login = ({ onLoginSuccess }) => {
         </form>
         <p className="login-footer">
           Don't have an account?{" "}
-          {/* FIX #9: Was pointing to https://apextrader-backend.onrender.com/signup
-              (a backend URL with no such route). Now correctly links to the
-              frontend signup page. */}
           <a
             href="https://apextrader-frontend-1.onrender.com/signup"
             target="_blank"

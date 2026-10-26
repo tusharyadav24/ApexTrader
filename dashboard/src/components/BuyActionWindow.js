@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
+import api from "../api";
 import GeneralContext from "./GeneralContext";
 import "./BuyActionWindow.css";
 
@@ -14,16 +14,21 @@ const BuyActionWindow = ({ uid }) => {
   const handleOrderClick = async () => {
     setLoading(true);
     try {
-      await axios.post(
-        "https://apextrader-backend.onrender.com/newOrder",
-        {
+      await api
+        .post("/newOrder", {
           name: uid,
           qty: stockQuantity,
           price: stockPrice,
           mode,
-        },
-        { withCredentials: true }
-      );
+        })
+        .catch(() =>
+          api.post("/orders", {
+            name: uid,
+            qty: stockQuantity,
+            price: stockPrice,
+            mode,
+          })
+        );
       generalContext.closeBuyWindow();
     } catch (err) {
       alert("Failed to place order. Please try again.");

@@ -1,23 +1,19 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom"; // FIX #1: import useLocation
-import axios from "axios";
+import { Link, useLocation } from "react-router-dom";
+import api from "../api";
 
 const Menu = ({ user, onLogout }) => {
-  // FIX #1: Removed useState(0) for selectedMenu — replaced with URL-based
-  // active state detection via useLocation(). This prevents the sidebar
-  // active tab from resetting to "Dashboard" on every page refresh.
   const location = useLocation();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
   const menuItems = [
     { label: "Dashboard", to: "/", exact: true },
-    { label: "Orders",    to: "/orders" },
-    { label: "Holdings",  to: "/holdings" },
+    { label: "Orders", to: "/orders" },
+    { label: "Holdings", to: "/holdings" },
     { label: "Positions", to: "/positions" },
-    { label: "Funds",     to: "/funds" },
+    { label: "Funds", to: "/funds" },
   ];
 
-  // Returns true if the current URL matches this menu item's route
   const isActive = (item) =>
     item.exact
       ? location.pathname === item.to
@@ -29,9 +25,7 @@ const Menu = ({ user, onLogout }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.get("https://apextrader-backend.onrender.com/logout", {
-        withCredentials: true,
-      });
+      await api.get("/logout").catch(() => api.post("/logout"));
       onLogout();
     } catch (err) {
       onLogout();
@@ -63,7 +57,7 @@ const Menu = ({ user, onLogout }) => {
         <hr />
         <div className="profile" onClick={handleProfileClick}>
           <div className="avatar">{getInitials(user?.username)}</div>
-          <p className="username">{user?.username || "User"}</p>
+          <p className="username">{user?.username || "Trader"}</p>
         </div>
         {isProfileDropdownOpen && (
           <div className="profile-dropdown">

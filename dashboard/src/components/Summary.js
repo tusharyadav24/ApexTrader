@@ -1,30 +1,65 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 
 const Summary = () => {
   const [holdings, setHoldings] = useState([]);
   const [positions, setPositions] = useState([]);
-  const [username, setUsername] = useState("User");
+  const [funds, setFunds] = useState({ availableMargin: 3740 });
+  const [username, setUsername] = useState("Trader");
 
   useEffect(() => {
-    axios
-      .get("https://apextrader-backend.onrender.com/me", { withCredentials: true })
-      .then((res) => setUsername(res.data.user?.username || "User"))
+    api
+      .get("/me")
+      .then((res) => {
+        if (res.data?.user?.username) {
+          setUsername(res.data.user.username);
+        }
+      })
       .catch(() => {});
 
-    axios
-      .get("https://apextrader-backend.onrender.com/allHoldings", { withCredentials: true })
-      .then((res) => setHoldings(res.data))
-      .catch(() => {});
+    api
+      .get("/allHoldings")
+      .then((res) => setHoldings(Array.isArray(res.data) ? res.data : []))
+      .catch(() => {
+        api
+          .get("/holdings")
+          .then((res) => setHoldings(Array.isArray(res.data) ? res.data : []))
+          .catch(() => {});
+      });
 
-    axios
-      .get("https://apextrader-backend.onrender.com/allPositions", { withCredentials: true })
-      .then((res) => setPositions(res.data))
-      .catch(() => {});
+    api
+      .get("/allPositions")
+      .then((res) => setPositions(Array.isArray(res.data) ? res.data : []))
+      .catch(() => {
+        api
+          .get("/positions")
+          .then((res) => setPositions(Array.isArray(res.data) ? res.data : []))
+          .catch(() => {});
+      });
+
+    api
+      .get("/funds")
+      .then((res) => {
+        if (res.data) setFunds(res.data);
+      })
+      .catch(() => {
+        api
+          .get("/allFunds")
+          .then((res) => {
+            if (res.data) setFunds(res.data);
+          })
+          .catch(() => {});
+      });
   }, []);
 
-  const totalInvestment = holdings.reduce((s, h) => s + h.avg * h.qty, 0);
-  const totalCurrent = holdings.reduce((s, h) => s + h.price * h.qty, 0);
+  const totalInvestment = holdings.reduce(
+    (s, h) => s + (Number(h.avg) || 0) * (Number(h.qty) || 0),
+    0
+  );
+  const totalCurrent = holdings.reduce(
+    (s, h) => s + (Number(h.price) || 0) * (Number(h.qty) || 0),
+    0
+  );
   const totalPnL = totalCurrent - totalInvestment;
   const pnlPercent =
     totalInvestment > 0
@@ -32,7 +67,8 @@ const Summary = () => {
       : "0.00";
 
   const formatCurrency = (val) => {
-    const abs = Math.abs(val);
+    const num = Number(val) || 0;
+    const abs = Math.abs(num);
     if (abs >= 1e5) return `${(abs / 1e5).toFixed(2)}L`;
     if (abs >= 1e3) return `${(abs / 1e3).toFixed(2)}k`;
     return abs.toFixed(2);
@@ -52,17 +88,17 @@ const Summary = () => {
 
         <div className="data">
           <div className="first">
-            <h3>3.74k</h3>
+            <h3>{formatCurrency(funds.availableMargin || 3740)}</h3>
             <p>Margin available</p>
           </div>
           <hr />
 
           <div className="second">
             <p>
-              Margins used <span>0</span>{" "}
+              Margins used <span>{formatCurrency(funds.usedMargin || 0)}</span>{" "}
             </p>
             <p>
-              Opening balance <span>3.74k</span>{" "}
+              Opening balance <span>{formatCurrency(funds.openingBalance || 3740)}</span>{" "}
             </p>
           </div>
         </div>

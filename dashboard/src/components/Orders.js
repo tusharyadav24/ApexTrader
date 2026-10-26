@@ -1,31 +1,36 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import api from "../api";
 
-// FIX #4 (optional improvement): Accepts 'user' prop from Home.js to avoid
-// an extra /me API call on mount. Falls back to fetching if prop not provided.
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    axios
-      .get("https://apextrader-backend.onrender.com/allOrders", { withCredentials: true })
+    api
+      .get("/allOrders")
       .then((res) => {
-        setOrders(res.data);
+        setOrders(Array.isArray(res.data) ? res.data : []);
         setLoading(false);
       })
       .catch(() => {
-        setError("Failed to load orders.");
-        setLoading(false);
+        api
+          .get("/orders")
+          .then((res) => {
+            setOrders(Array.isArray(res.data) ? res.data : []);
+            setLoading(false);
+          })
+          .catch(() => {
+            setError("Failed to load orders.");
+            setLoading(false);
+          });
       });
   }, []);
 
   const handleDeleteOrder = async (id) => {
     try {
-      await axios.delete(`https://apextrader-backend.onrender.com/deleteOrder/${id}`, {
-        withCredentials: true,
-      });
+      await api.delete(`/deleteOrder/${id}`).catch(() => api.delete(`/orders/${id}`));
       setOrders((prev) => prev.filter((o) => o._id !== id));
     } catch {
       alert("Failed to delete order.");
@@ -40,11 +45,9 @@ const Orders = () => {
       <div className="orders">
         <div className="no-orders">
           <p>You haven't placed any orders today</p>
-          {/* FIX #7: Replaced <a href="/"> with react-router <Link to="/">
-              to prevent a full page reload that re-triggers the auth check */}
-          <a href="/" className="btn">
+          <Link to="/" className="btn">
             Get started
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -65,46 +68,49 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order.name}</td>
-                <td>
-                  <p
-                    style={{
-                      background:
-                        order.mode === "BUY"
-                          ? "rgba(65,132,243,0.15)"
-                          : "rgba(255,87,34,0.15)",
-                      color: order.mode === "BUY" ? "#4184f3" : "#ff5722",
-                      padding: "2px 8px",
-                      borderRadius: "2px",
-                      display: "inline-block",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {order.mode}
-                  </p>
-                </td>
-                <td>{order.qty}</td>
-                <td>{order.price > 0 ? order.price.toFixed(2) : "Market"}</td>
-                <td>
-                  <button
-                    onClick={() => handleDeleteOrder(order._id)}
-                    style={{
-                      background: "transparent",
-                      border: "1px solid #ddd",
-                      borderRadius: "2px",
-                      padding: "2px 8px",
-                      cursor: "pointer",
-                      color: "#888",
-                      fontSize: "0.75rem",
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {orders.map((order) => {
+              const priceNum = Number(order.price) || 0;
+              return (
+                <tr key={order._id}>
+                  <td>{order.name}</td>
+                  <td>
+                    <p
+                      style={{
+                        background:
+                          order.mode === "BUY"
+                            ? "rgba(65,132,243,0.15)"
+                            : "rgba(255,87,34,0.15)",
+                        color: order.mode === "BUY" ? "#4184f3" : "#ff5722",
+                        padding: "2px 8px",
+                        borderRadius: "2px",
+                        display: "inline-block",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {order.mode}
+                    </p>
+                  </td>
+                  <td>{order.qty}</td>
+                  <td>{priceNum > 0 ? priceNum.toFixed(2) : "Market"}</td>
+                  <td>
+                    <button
+                      onClick={() => handleDeleteOrder(order._id)}
+                      style={{
+                        background: "transparent",
+                        border: "1px solid #ddd",
+                        borderRadius: "2px",
+                        padding: "2px 8px",
+                        cursor: "pointer",
+                        color: "#888",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

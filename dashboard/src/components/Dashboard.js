@@ -8,9 +8,6 @@ import Summary from "./Summary";
 import WatchList from "./WatchList";
 import { GeneralContextProvider } from "./GeneralContext";
 
-// FIX #2: GeneralContextProvider now wraps the ENTIRE dashboard layout,
-// ensuring WatchList (which uses openBuyWindow) and BuyActionWindow
-// (which is rendered inside the provider) share the same context scope.
 const Dashboard = () => {
   return (
     <GeneralContextProvider>
