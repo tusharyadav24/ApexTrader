@@ -4,28 +4,40 @@ import GeneralContext from "./GeneralContext";
 import "./BuyActionWindow.css";
 
 const BuyActionWindow = ({ uid }) => {
-  const [stockQuantity, setStockQuantity] = useState(1);
-  const [stockPrice, setStockPrice] = useState(0.0);
+  const [stockQuantity, setStockQuantity] = useState("1");
+  const [stockPrice, setStockPrice] = useState("");
   const [mode, setMode] = useState("BUY");
   const [loading, setLoading] = useState(false);
 
   const generalContext = useContext(GeneralContext);
 
   const handleOrderClick = async () => {
+    const qty = Number(stockQuantity);
+    const price = parseFloat(stockPrice);
+
+    if (!qty || qty < 1) {
+      alert("Please enter a valid quantity.");
+      return;
+    }
+    if (isNaN(price) || price <= 0) {
+      alert("Please enter a valid price.");
+      return;
+    }
+
     setLoading(true);
     try {
       await api
         .post("/newOrder", {
           name: uid,
-          qty: stockQuantity,
-          price: stockPrice,
+          qty,
+          price,
           mode,
         })
         .catch(() =>
           api.post("/orders", {
             name: uid,
-            qty: stockQuantity,
-            price: stockPrice,
+            qty,
+            price,
             mode,
           })
         );
@@ -72,7 +84,7 @@ const BuyActionWindow = ({ uid }) => {
               name="qty"
               id="qty"
               min="1"
-              onChange={(e) => setStockQuantity(Number(e.target.value))}
+              onChange={(e) => setStockQuantity(e.target.value)}
               value={stockQuantity}
             />
           </fieldset>
@@ -83,7 +95,8 @@ const BuyActionWindow = ({ uid }) => {
               name="price"
               id="price"
               step="0.05"
-              onChange={(e) => setStockPrice(Number(e.target.value))}
+              placeholder="0.00"
+              onChange={(e) => setStockPrice(e.target.value)}
               value={stockPrice}
             />
           </fieldset>

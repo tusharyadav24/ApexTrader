@@ -1,16 +1,40 @@
 .container {
     --radius: 4px;
     width: 40%;
-    height: 63%;
+    min-width: 300px;
+    max-width: 520px;
     background: rgb(245, 245, 245);
-    position: absolute;
-    bottom: 0;
-    left: 35%;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     cursor: move;
     box-sizing: border-box;
     z-index: 100;
     border-radius: var(--radius);
     border: 1px solid rgb(238, 238, 238);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      width: 96vw;
+      min-width: unset;
+      left: 2vw;
+      transform: none;
+      bottom: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      width: 100vw;
+      left: 0;
+      bottom: 0;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+    }
   }
   
   .dragging {
@@ -108,10 +132,30 @@
   }
   
   .inputs fieldset {
-    max-width: 120px;
+    flex: 1;
+    max-width: 160px;
+    min-width: 100px;
     box-sizing: border-box;
     border: 0.7px solid #ddd;
     margin-right: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .inputs {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .inputs fieldset {
+      max-width: 100%;
+      min-width: unset;
+      margin-right: 0;
+    }
+
+    .inputs fieldset input {
+      max-width: 100%;
+    }
   }
   
   .inputs fieldset legend {
@@ -154,9 +198,26 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
-    top: 10%;
-    padding: 0 20px;
+    padding: 12px 20px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .buttons > div {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      flex: 1;
+      text-align: center;
+    }
   }
   
   .buttons span {
