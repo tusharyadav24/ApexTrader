@@ -144,7 +144,22 @@ const registerHandler = async (req, res) => {
     }
     const newUser = new UserModel({ username, email });
     await UserModel.register(newUser, password);
-    return res.status(201).json({ message: "Registration successful. Please log in." });
+    // Auto-login the new user so the session cookie is set
+    req.logIn(newUser, (loginErr) => {
+      if (loginErr) {
+        // If auto-login fails, still report success
+        return res.status(201).json({
+          message: "Registration successful. Please log in.",
+          redirect: true,
+        });
+      }
+      return res.status(201).json({
+        message: "Registration successful!",
+        redirect: true,
+        user: { username: newUser.username, email: newUser.email },
+      });
+    });
+    return; // early return — response sent inside callback
   } catch (err) {
     return res.status(500).json({ message: "Registration failed.", error: err.message });
   }
@@ -334,6 +349,15 @@ const updateFundsHandler = (req, res) => {
   }
   return res.json(fundsData);
 };
+
+// ─── Health Route (prevents Render free-tier sleep) ───
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
+});
 
 app.post("/register", registerHandler);
 app.post("/login", loginHandler);
