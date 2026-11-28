@@ -130,7 +130,6 @@ export const LiveMarketProvider = ({ children }) => {
     const interval = setInterval(() => {
       setStocks((prev) =>
         prev.map((stock) => {
-          // ~60% of stocks tick each cycle for natural market feel
           if (Math.random() > 0.6) {
             return { ...stock, tickDir: "flat" };
           }

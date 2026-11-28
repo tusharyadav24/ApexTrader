@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
 import Home from "./components/Home";
 
-// ─── Scroll-reveal observer (fires once per element) ───
 const initScrollReveal = () => {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -23,7 +22,6 @@ const initScrollReveal = () => {
   });
 };
 
-// Re-run after every route change or dynamic render
 const initMutationWatcher = () => {
   const rootEl = document.getElementById("root");
   if (!rootEl) return;

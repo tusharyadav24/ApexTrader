@@ -1,7 +1,3 @@
-/* ══════════════════════════════════════════════════════════
-   ApexTrader Dashboard – Theme, Animations & Live Stocks UI
-   ══════════════════════════════════════════════════════════ */
-
 :root {
   --apex-primary: #f56834;
   --apex-primary-light: #ff8a5c;
@@ -42,7 +38,6 @@ code {
     monospace;
 }
 
-/* ── Animated Ambient Background Orbs (matching frontend) ── */
 body::before {
   content: '';
   position: fixed;
@@ -65,7 +60,6 @@ body::before {
   100% { opacity: 0.7; transform: scale(1); }
 }
 
-/* ── Custom Scrollbar ── */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
@@ -78,9 +72,6 @@ body::before {
   border-radius: 4px;
 }
 
-/* ══════════════════════════════════════════════════════════
-   ANIMATIONS (matching frontend)
-   ══════════════════════════════════════════════════════════ */
 .scroll-reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -185,7 +176,6 @@ body::before {
   box-shadow: var(--apex-shadow-lg);
 }
 
-/* ── Live Badge ── */
 .live-badge {
   display: inline-flex;
   align-items: center;
@@ -214,9 +204,6 @@ body::before {
   animation: none;
 }
 
-/* ══════════════════════════════════════════════════════════
-   CORE DASHBOARD LAYOUT & COMPONENTS
-   ══════════════════════════════════════════════════════════ */
 .dashboard-container {
   width: 100%;
   height: 90vh;
@@ -501,7 +488,6 @@ body::before {
   cursor: pointer;
 }
 
-/* ── TopBar & Menu ── */
 .topbar-container {
   width: 100%;
   height: 10vh;
@@ -696,7 +682,6 @@ hr {
   color: var(--apex-primary);
 }
 
-/* ── Orders empty state ── */
 .orders {
   width: 100%;
   height: 75vh;
@@ -725,7 +710,6 @@ hr {
   font-weight: 400;
 }
 
-/* ── Summary Sections ── */
 .username h6 {
   font-size: 1.5rem;
   font-weight: 600;
@@ -814,7 +798,6 @@ hr {
   margin-top: 5%;
 }
 
-/* ── WatchList ── */
 .watchlist-container {
   flex-basis: 32%;
   height: 100%;
@@ -970,9 +953,6 @@ hr {
   display: flex;
 }
 
-/* ══════════════════════════════════════════════════════════
-   LIVE STOCKS PAGE STYLES
-   ══════════════════════════════════════════════════════════ */
 .live-stocks-page {
   display: flex;
   flex-direction: column;
@@ -1192,7 +1172,6 @@ hr {
   opacity: 0.92;
 }
 
-/* ── Brand & Profile Dropdown ── */
 .brand-logo {
   display: flex;
   align-items: center;
@@ -1278,7 +1257,6 @@ hr {
   font-size: 0.95rem;
 }
 
-/* ── Login Card ── */
 .login-overlay {
   display: flex;
   align-items: center;
@@ -1414,7 +1392,6 @@ hr {
   text-decoration: underline;
 }
 
-/* ── Responsive ── */
 @media (max-width: 900px) {
   .dashboard-container {
     flex-direction: column;

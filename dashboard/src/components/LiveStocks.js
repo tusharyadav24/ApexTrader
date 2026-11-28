@@ -173,7 +173,6 @@ const LiveStocks = () => {
 
   return (
     <div className="live-stocks-page fade-in-up">
-      {/* Header & Controls */}
       <div className="live-header">
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -232,7 +231,6 @@ const LiveStocks = () => {
         </div>
       </div>
 
-      {/* Market Indices Cards */}
       <div className="indices-grid">
         {indices.map((idx, i) => (
           <div
@@ -268,7 +266,6 @@ const LiveStocks = () => {
         ))}
       </div>
 
-      {/* Live Selected Stock Chart */}
       {selectedStock && chartData && (
         <div className="glass-card live-chart-panel fade-in-up">
           <div className="live-chart-header">
@@ -315,7 +312,6 @@ const LiveStocks = () => {
         </div>
       )}
 
-      {/* Filter Tabs & Sector Pills */}
       <div
         style={{
           display: "flex",
@@ -355,7 +351,6 @@ const LiveStocks = () => {
         </div>
       </div>
 
-      {/* Live Stock Cards Grid */}
       <div className="live-stocks-grid">
         {filteredStocks.map((stock, idx) => {
           const range = stock.high - stock.low || 1;
@@ -408,7 +403,6 @@ const LiveStocks = () => {
                 </div>
               </div>
 
-              {/* Day High/Low Range Bar */}
               <div>
                 <div className="stock-meta">
                   <span>L: ₹{stock.low.toFixed(2)}</span>
