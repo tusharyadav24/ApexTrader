@@ -3,11 +3,11 @@ import React from "react";
 function Hero() {
   return (
     <div className="container">
-      <div className="row p-5 mt-5 mb-5">
+      <div className="row p-5 mt-5 mb-5 scroll-reveal">
         <h1 className="fs-2 text-center">
           We pioneered the discount broking model in India.
           <br />
-          Now, we are breaking ground with our technology.
+          Now, we are <span className="gradient-text">breaking ground</span> with our technology.
         </h1>
       </div>
 
@@ -15,7 +15,7 @@ function Hero() {
         className="row p-5 mt-5 border-top text-muted"
         style={{ lineHeight: "1.8", fontSize: "1.2em" }}
       >
-        <div className="col-md-6 p-5">
+        <div className="col-md-6 p-5 scroll-reveal">
           <p>
             We kick-started operations on the 15th of August, 2010 with the
             goal of breaking all barriers that traders and investors face in
@@ -34,13 +34,13 @@ function Hero() {
             all Indian retail trading volumes.
           </p>
         </div>
-        <div className="col-md-6 p-5">
+        <div className="col-md-6 p-5 scroll-reveal scroll-reveal-delay-2">
           <p>
             In addition, we run a number of popular open online educational and
             community initiatives to empower retail traders and investors.
           </p>
           <p>
-            <a href="/" style={{ textDecoration: "none" }}>
+            <a href="/" style={{ textDecoration: "none" }} className="link-apex">
               Rainmatter
             </a>
             , our fintech fund and incubator, has invested in several fintech

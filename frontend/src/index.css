@@ -1,24 +1,406 @@
+/* ══════════════════════════════════════════════════════════
+   ApexTrader – Premium Theme with Animations & Effects
+   ══════════════════════════════════════════════════════════ */
+
+/* ── CSS Custom Properties (Theme Tokens) ── */
+:root {
+  --apex-primary: #f56834;
+  --apex-primary-light: #ff8a5c;
+  --apex-primary-dark: #d4502a;
+  --apex-secondary: #4184f3;
+  --apex-secondary-light: #6fa4ff;
+  --apex-dark: #1a1a2e;
+  --apex-darker: #0f0f23;
+  --apex-surface: #ffffff;
+  --apex-surface-alt: #f8f9fc;
+  --apex-text: #2d2d3a;
+  --apex-text-muted: #7a7a8e;
+  --apex-gradient: linear-gradient(135deg, var(--apex-primary), #ff6b6b, var(--apex-secondary));
+  --apex-gradient-btn: linear-gradient(135deg, var(--apex-primary), var(--apex-primary-light));
+  --apex-shadow: 0 4px 24px rgba(245, 104, 52, 0.12);
+  --apex-shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.1);
+  --apex-radius: 12px;
+  --apex-radius-lg: 20px;
+  --apex-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Global Reset / Base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: #ffffff !important;
-  color: #000000 !important;
+  background-color: var(--apex-surface) !important;
+  color: var(--apex-text) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+/* ══════════════════════════════════════════════════════════
+   ANIMATED BACKGROUND PARTICLES (via pseudo-elements)
+   ══════════════════════════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(245, 104, 52, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(65, 132, 243, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.02) 0%, transparent 60%);
+  animation: bgShift 20s ease-in-out infinite alternate;
+}
+
+@keyframes bgShift {
+  0%   { opacity: 0.6; transform: scale(1); }
+  50%  { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.6; transform: scale(1); }
+}
+
+/* Floating orbs animation */
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: -2;
+  background:
+    radial-gradient(circle 300px at 10% 30%, rgba(245, 104, 52, 0.06), transparent),
+    radial-gradient(circle 250px at 85% 20%, rgba(65, 132, 243, 0.05), transparent),
+    radial-gradient(circle 200px at 40% 80%, rgba(255, 107, 107, 0.04), transparent);
+  animation: orbFloat 30s linear infinite;
+}
+
+@keyframes orbFloat {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  25%  { transform: translate(2%, -1%) rotate(90deg); }
+  50%  { transform: translate(-1%, 2%) rotate(180deg); }
+  75%  { transform: translate(1%, -2%) rotate(270deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   SCROLL-TRIGGERED FADE-IN ANIMATIONS (pure CSS)
+   ══════════════════════════════════════════════════════════ */
+
+/* Elements start invisible and animate in via the
+   IntersectionObserver logic added in index.js */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children delay */
+.scroll-reveal-delay-1 { transition-delay: 0.1s; }
+.scroll-reveal-delay-2 { transition-delay: 0.2s; }
+.scroll-reveal-delay-3 { transition-delay: 0.3s; }
+.scroll-reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Fade in from different directions */
+.fade-in-up {
+  animation: fadeInUp 0.7s ease-out both;
+}
+
+.fade-in-down {
+  animation: fadeInDown 0.7s ease-out both;
+}
+
+.fade-in-left {
+  animation: fadeInLeft 0.7s ease-out both;
+}
+
+.fade-in-right {
+  animation: fadeInRight 0.7s ease-out both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Scale-in pop */
+.scale-in {
+  animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   GRADIENT TEXT
+   ══════════════════════════════════════════════════════════ */
+.gradient-text {
+  background: var(--apex-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ══════════════════════════════════════════════════════════
+   GLASSMORPHISM CARDS
+   ══════════════════════════════════════════════════════════ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  transition: transform var(--apex-transition), box-shadow var(--apex-transition);
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--apex-shadow-lg);
+}
+
+/* ══════════════════════════════════════════════════════════
+   BUTTONS – Premium Styled
+   ══════════════════════════════════════════════════════════ */
+
+/* Primary CTA button */
+.btn-apex {
+  background: var(--apex-gradient-btn) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: var(--apex-radius) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--apex-transition) !important;
+  box-shadow: 0 4px 16px rgba(245, 104, 52, 0.3);
+}
+
+.btn-apex::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-apex:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 28px rgba(245, 104, 52, 0.4) !important;
+}
+
+.btn-apex:hover::before {
+  left: 100%;
+}
+
+.btn-apex:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* Sign-up hero button */
 .sign-up-btn {
-  background-color: rgb(87, 87, 217) !important;
+  background: var(--apex-gradient-btn) !important;
+  color: #fff !important;
   width: auto;
-  min-width: 160px;
+  min-width: 180px;
   margin: auto;
-  padding: 12px 32px !important;
+  padding: 14px 36px !important;
+  border-radius: var(--apex-radius) !important;
+  font-weight: 700 !important;
+  font-size: 1.05rem !important;
+  letter-spacing: 0.5px;
+  border: none !important;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(245, 104, 52, 0.3);
+  transition: all var(--apex-transition) !important;
 }
 
+.sign-up-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.sign-up-btn:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 10px 32px rgba(245, 104, 52, 0.45) !important;
+}
+
+.sign-up-btn:hover::after {
+  transform: translateX(100%);
+}
+
+/* Secondary / outline button */
+.btn-outline-apex {
+  background: transparent !important;
+  color: var(--apex-primary) !important;
+  border: 2px solid var(--apex-primary) !important;
+  border-radius: var(--apex-radius) !important;
+  font-weight: 600 !important;
+  transition: all var(--apex-transition) !important;
+}
+
+.btn-outline-apex:hover {
+  background: var(--apex-primary) !important;
+  color: #fff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(245, 104, 52, 0.3) !important;
+}
+
+/* Ghost button */
+.btn-ghost {
+  background: rgba(245, 104, 52, 0.08) !important;
+  color: var(--apex-primary) !important;
+  border: none !important;
+  border-radius: var(--apex-radius) !important;
+  font-weight: 600 !important;
+  transition: all var(--apex-transition) !important;
+}
+
+.btn-ghost:hover {
+  background: rgba(245, 104, 52, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* General btn override for all buttons in the app */
+.btn-dark,
+.btn-primary {
+  background: var(--apex-gradient-btn) !important;
+  border: none !important;
+  border-radius: var(--apex-radius) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 16px rgba(245, 104, 52, 0.3);
+  transition: all var(--apex-transition) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-dark:hover,
+.btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 28px rgba(245, 104, 52, 0.45) !important;
+}
+
+.btn-dark:active,
+.btn-primary:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   INPUT FIELDS – Glow Effect
+   ══════════════════════════════════════════════════════════ */
+.input-glow,
+.form-control {
+  border: 2px solid #e8e8f0 !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+  transition: all var(--apex-transition) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+}
+
+.input-glow:focus,
+.form-control:focus {
+  border-color: var(--apex-primary) !important;
+  box-shadow: 0 0 0 4px rgba(245, 104, 52, 0.1),
+              0 2px 8px rgba(245, 104, 52, 0.08) !important;
+  outline: none !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   LINKS – Styled
+   ══════════════════════════════════════════════════════════ */
+.link-apex {
+  color: var(--apex-secondary) !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  position: relative;
+  transition: color var(--apex-transition) !important;
+}
+
+.link-apex::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--apex-secondary);
+  transition: width var(--apex-transition);
+}
+
+.link-apex:hover::after {
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════════════════
+   NAVBAR – Sticky + Glassmorphism
+   ══════════════════════════════════════════════════════════ */
 .navbar {
   min-height: 72px;
   padding: 0;
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: sticky !important;
+  top: 0;
+  z-index: 1000;
+  transition: box-shadow var(--apex-transition),
+              background var(--apex-transition);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.navbar.scrolled {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.95) !important;
 }
 
 .navbar .container {
@@ -33,13 +415,33 @@ code {
 }
 
 .navbar .navbar-nav .nav-link {
-  color: #424242;
+  color: var(--apex-text);
   font-size: 15px;
-  padding: 10px 8px;
+  font-weight: 500;
+  padding: 10px 12px;
+  position: relative;
+  transition: color var(--apex-transition);
+}
+
+.navbar .navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--apex-primary);
+  border-radius: 1px;
+  transition: width var(--apex-transition);
+}
+
+.navbar .navbar-nav .nav-link:hover::after {
+  width: 70%;
 }
 
 .navbar .nav-link:hover {
-  color: rgb(245, 104, 52);
+  color: var(--apex-primary);
 }
 
 @media (min-width: 992px) {
@@ -63,9 +465,54 @@ code {
   }
 }
 
+/* ══════════════════════════════════════════════════════════
+   SECTIONS – Clean spacing & borders
+   ══════════════════════════════════════════════════════════ */
+
+/* Add smooth scroll-reveal to all major sections */
+.container {
+  position: relative;
+}
+
+/* Section dividers */
+.border-top {
+  border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PRICING CARDS
+   ══════════════════════════════════════════════════════════ */
+.border {
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: var(--apex-radius) !important;
+  transition: all var(--apex-transition);
+}
+
+.border:hover {
+  border-color: rgba(245, 104, 52, 0.2) !important;
+  box-shadow: 0 4px 20px rgba(245, 104, 52, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ══════════════════════════════════════════════════════════
+   SUPPORT HERO
+   ══════════════════════════════════════════════════════════ */
 #supportHero {
-  background-color: rgb(56, 126, 209);
+  background: linear-gradient(135deg, #2563eb, #3b82f6, #60a5fa) !important;
   color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+#supportHero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  animation: orbFloat 20s linear infinite;
 }
 
 #supportHero a {
@@ -82,10 +529,108 @@ code {
   padding: 16px 40px;
   width: 100%;
   font-size: 18px;
-  border-radius: 8px;
+  border-radius: var(--apex-radius);
   border: none;
+  transition: box-shadow var(--apex-transition);
 }
 
+#supportHero input:focus {
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+  outline: none;
+}
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════ */
+footer {
+  background: var(--apex-surface-alt) !important;
+  position: relative;
+}
+
+footer a {
+  transition: color var(--apex-transition), transform var(--apex-transition) !important;
+}
+
+footer a:hover {
+  color: var(--apex-primary) !important;
+  transform: translateX(4px);
+}
+
+/* ══════════════════════════════════════════════════════════
+   IMAGES – Hover effects
+   ══════════════════════════════════════════════════════════ */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.img-fluid {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.img-fluid:hover {
+  transform: scale(1.03);
+}
+
+/* ══════════════════════════════════════════════════════════
+   HEADINGS – Smooth entrance
+   ══════════════════════════════════════════════════════════ */
+h1, h2, h3 {
+  color: var(--apex-dark);
+  font-weight: 700;
+}
+
+h1 {
+  letter-spacing: -0.5px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PULSE / GLOW EFFECTS
+   ══════════════════════════════════════════════════════════ */
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.4); }
+  50%      { box-shadow: 0 0 20px 10px rgba(0, 200, 83, 0.1); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   SCROLL INDICATOR (Bounce arrow on hero)
+   ══════════════════════════════════════════════════════════ */
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  animation: bounce 2s ease-in-out infinite;
+  color: var(--apex-text-muted);
+  font-size: 0.85rem;
+}
+
+.scroll-indicator::after {
+  content: '↓';
+  font-size: 1.5rem;
+  margin-top: 4px;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(10px); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   COUNTER / NUMBERS ANIMATION
+   ══════════════════════════════════════════════════════════ */
+.animated-number {
+  display: inline-block;
+  transition: all 1s ease-out;
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE OVERRIDES
+   ══════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
   #supportWrapper {
     margin: 0 20px;
@@ -103,8 +648,13 @@ code {
   }
 
   .sign-up-btn {
-    width: 80% !important;
+    width: 85% !important;
     min-width: unset;
+    padding: 12px 24px !important;
+  }
+
+  h1 {
+    font-size: 1.8rem !important;
   }
 }
 
@@ -122,7 +672,53 @@ code {
   }
 }
 
-img {
-  max-width: 100%;
-  height: auto;
+/* ══════════════════════════════════════════════════════════
+   MISC UTILITY CLASSES
+   ══════════════════════════════════════════════════════════ */
+
+/* Text selection color */
+::selection {
+  background: rgba(245, 104, 52, 0.2);
+  color: var(--apex-dark);
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--apex-surface-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--apex-primary), var(--apex-primary-dark));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--apex-primary-dark);
+}
+
+/* Loading skeleton shimmer */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--apex-radius);
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Tooltip-style hover effect for list items */
+.hover-lift {
+  transition: transform var(--apex-transition), box-shadow var(--apex-transition);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--apex-shadow-lg);
 }

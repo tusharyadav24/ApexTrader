@@ -5,16 +5,16 @@ function Education() {
   return (
     <div className="container mt-5">
       <div className="row align-items-center">
-        <div className="col-md-6">
+        <div className="col-md-6 scroll-reveal">
           <img src="assets/education.svg" style={{ width: "70%" }} alt="Education" />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-6 scroll-reveal scroll-reveal-delay-2">
           <h1 className="mb-3 fs-2">Free and open market education</h1>
           <p>
             Varsity, the largest online stock market education book in the world
             covering everything from the basics to advanced trading.
           </p>
-          <Link to="/products" style={{ textDecoration: "none" }}>
+          <Link to="/products" className="link-apex" style={{ textDecoration: "none" }}>
             Varsity{" "}
             <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
           </Link>
@@ -22,7 +22,7 @@ function Education() {
             TradingQ&amp;A, the most active trading and investment community in
             India for all your market related queries.
           </p>
-          <Link to="/support" style={{ textDecoration: "none" }}>
+          <Link to="/support" className="link-apex" style={{ textDecoration: "none" }}>
             TradingQ&amp;A{" "}
             <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
           </Link>

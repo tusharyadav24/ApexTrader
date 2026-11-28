@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+const DASHBOARD_URL =
+  process.env.REACT_APP_DASHBOARD_URL ||
+  (typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1")
+    ? "http://localhost:3001"
+    : "https://apextrader-dashboard-1.onrender.com");
+
 function Signup() {
   const [form, setForm] = useState({
     username: "",
@@ -9,8 +17,8 @@ function Signup() {
     confirmPassword: "",
   });
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
 
   const API_BASE_URL =
     process.env.REACT_APP_API_URL ||
@@ -27,7 +35,6 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setSuccess("");
 
     if (form.password !== form.confirmPassword) {
       return setError("Passwords do not match.");
@@ -50,10 +57,11 @@ function Signup() {
           withCredentials: true,
         }
       );
-      setSuccess(
-        "Account created successfully! You can now log in to the dashboard."
-      );
-      setForm({ username: "", email: "", password: "", confirmPassword: "" });
+      // Show success state then redirect to dashboard
+      setRedirecting(true);
+      setTimeout(() => {
+        window.location.href = DASHBOARD_URL;
+      }, 1500);
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed.");
     } finally {
@@ -61,29 +69,67 @@ function Signup() {
     }
   };
 
+  if (redirecting) {
+    return (
+      <div className="container py-5" style={{ minHeight: "60vh" }}>
+        <div className="row justify-content-center">
+          <div className="col-md-6 col-lg-5 text-center fade-in-up">
+            <div
+              className="card shadow-lg border-0 p-5"
+              style={{ borderRadius: "16px" }}
+            >
+              <div className="mb-4">
+                <div
+                  className="mx-auto pulse-glow"
+                  style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: "50%",
+                    background: "linear-gradient(135deg, #00c853, #69f0ae)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span style={{ fontSize: 40, color: "#fff" }}>✓</span>
+                </div>
+              </div>
+              <h3 className="fw-bold mb-2" style={{ color: "#1a1a2e" }}>
+                Account Created!
+              </h3>
+              <p className="text-muted mb-3">
+                Redirecting you to your dashboard...
+              </p>
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container py-5">
+    <div className="container py-5" style={{ minHeight: "60vh" }}>
       <div className="row justify-content-center">
-        <div className="col-md-6 col-lg-5">
+        <div className="col-md-6 col-lg-5 fade-in-up">
           <div
-            className="card shadow-sm border-0 p-4"
-            style={{ borderRadius: "8px" }}
+            className="card glass-card shadow-lg border-0 p-4"
+            style={{ borderRadius: "16px" }}
           >
             <div className="text-center mb-4">
-              <h2 className="fw-bold" style={{ color: "rgb(245,104,52)" }}>
-                ApexTrader
-              </h2>
+              <h2 className="fw-bold gradient-text">ApexTrader</h2>
               <p className="text-muted">Create your trading account</p>
             </div>
 
             {error && (
-              <div className="alert alert-danger py-2 px-3" role="alert">
+              <div
+                className="alert alert-danger py-2 px-3 fade-in-up"
+                role="alert"
+                style={{ borderRadius: "8px" }}
+              >
                 {error}
-              </div>
-            )}
-            {success && (
-              <div className="alert alert-success py-2 px-3" role="alert">
-                {success}
               </div>
             )}
 
@@ -96,7 +142,7 @@ function Signup() {
                   type="text"
                   id="username"
                   name="username"
-                  className="form-control"
+                  className="form-control input-glow"
                   placeholder="Choose a username"
                   value={form.username}
                   onChange={handleChange}
@@ -112,7 +158,7 @@ function Signup() {
                   type="email"
                   id="email"
                   name="email"
-                  className="form-control"
+                  className="form-control input-glow"
                   placeholder="Enter your email"
                   value={form.email}
                   onChange={handleChange}
@@ -128,7 +174,7 @@ function Signup() {
                   type="password"
                   id="password"
                   name="password"
-                  className="form-control"
+                  className="form-control input-glow"
                   placeholder="Min 8 characters"
                   value={form.password}
                   onChange={handleChange}
@@ -148,7 +194,7 @@ function Signup() {
                   type="password"
                   id="confirmPassword"
                   name="confirmPassword"
-                  className="form-control"
+                  className="form-control input-glow"
                   placeholder="Re-enter password"
                   value={form.confirmPassword}
                   onChange={handleChange}
@@ -158,15 +204,20 @@ function Signup() {
               </div>
               <button
                 type="submit"
-                className="btn w-100 py-2 fw-semibold"
-                style={{
-                  background: "rgb(245,104,52)",
-                  color: "#fff",
-                  borderRadius: "4px",
-                }}
+                className="btn btn-apex w-100 py-2 fw-semibold"
                 disabled={loading}
               >
-                {loading ? "Creating Account..." : "Open Free Account"}
+                {loading ? (
+                  <>
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                    />
+                    Creating Account...
+                  </>
+                ) : (
+                  "Open Free Account"
+                )}
               </button>
             </form>
 
@@ -176,10 +227,10 @@ function Signup() {
             >
               Already have an account?{" "}
               <a
-                href="https://apextrader-dashboard-1.onrender.com"
+                href={DASHBOARD_URL}
                 target="_blank"
                 rel="noreferrer"
-                style={{ color: "rgb(65,132,243)" }}
+                className="link-apex"
               >
                 Go to Dashboard
               </a>

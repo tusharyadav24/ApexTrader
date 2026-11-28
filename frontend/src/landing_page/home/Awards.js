@@ -4,10 +4,10 @@ function Awards() {
   return (
     <div className="container mt-5">
       <div className="row">
-        <div className="col-md-6 p-5">
+        <div className="col-md-6 p-5 scroll-reveal">
           <img src="assets/largestBroker.svg" alt="Largest Broker Award" className="img-fluid" />
         </div>
-        <div className="col-md-6 p-5 mt-5">
+        <div className="col-md-6 p-5 mt-5 scroll-reveal scroll-reveal-delay-2">
           <h1>Largest stock broker in India</h1>
           <p className="mb-5">
             2+ million ApexTrader clients contribute to over 15% of all retail

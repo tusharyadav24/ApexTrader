@@ -3,9 +3,13 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg border-bottom bg-white">
+    <nav className="navbar navbar-expand-lg bg-white">
       <div className="container py-2">
-        <Link className="navbar-brand fw-bold" to="/" style={{ color: "rgb(245,104,52)", fontSize: "1.3rem" }}>
+        <Link
+          className="navbar-brand fw-bold gradient-text"
+          to="/"
+          style={{ fontSize: "1.3rem" }}
+        >
           ApexTrader
         </Link>
 
@@ -54,16 +58,9 @@ function Navbar() {
             <li className="nav-item">
               <a
                 href="https://apextrader-dashboard-1.onrender.com"
-                className="btn btn-sm px-3 py-2"
+                className="btn btn-apex btn-sm px-4 py-2"
                 target="_blank"
                 rel="noreferrer"
-                style={{
-                  background: "rgb(245,104,52)",
-                  color: "#fff",
-                  borderRadius: "4px",
-                  fontWeight: 600,
-                  textDecoration: "none",
-                }}
               >
                 Dashboard
               </a>

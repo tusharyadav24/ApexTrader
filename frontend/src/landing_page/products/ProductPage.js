@@ -5,14 +5,14 @@ function ProductPage() {
   return (
     <>
       <div className="container border-bottom mb-5">
-        <div className="text-center mt-5 p-3">
-          <h1>Technology</h1>
+        <div className="text-center mt-5 p-3 fade-in-up">
+          <h1 className="gradient-text">Technology</h1>
           <h3 className="text-muted mt-3 fs-4">
             Sleek, modern and intuitive trading platforms
           </h3>
           <p className="mt-3 mb-5">
             Check out our{" "}
-            <Link to="/pricing" style={{ textDecoration: "none" }}>
+            <Link to="/pricing" className="link-apex" style={{ textDecoration: "none" }}>
               investment offerings{" "}
               <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
             </Link>
@@ -22,10 +22,10 @@ function ProductPage() {
 
       <div className="container mt-5">
         <div className="row align-items-center">
-          <div className="col-md-6">
+          <div className="col-md-6 scroll-reveal">
             <img src="assets/kite.png" alt="ApexTrader Kite" className="img-fluid" />
           </div>
-          <div className="col-md-6 p-5 mt-5">
+          <div className="col-md-6 p-5 mt-5 scroll-reveal scroll-reveal-delay-2">
             <h1>Kite</h1>
             <p>
               Our ultra-fast flagship trading platform with streaming market
@@ -33,10 +33,10 @@ function ProductPage() {
               experience seamlessly on your Android and iOS devices.
             </p>
             <div>
-              <a href="https://apextrader-dashboard-1.onrender.com" target="_blank" rel="noreferrer">
+              <a href="https://apextrader-dashboard-1.onrender.com" target="_blank" rel="noreferrer" className="link-apex">
                 Try Demo
               </a>
-              <Link to="/products" style={{ marginLeft: "50px" }}>
+              <Link to="/products" className="link-apex" style={{ marginLeft: "50px" }}>
                 Learn More
               </Link>
             </div>
@@ -58,7 +58,7 @@ function ProductPage() {
 
       <div className="container mt-5">
         <div className="row align-items-center">
-          <div className="col-md-6 p-5 mt-5">
+          <div className="col-md-6 p-5 mt-5 scroll-reveal">
             <h1>Console</h1>
             <p>
               The central dashboard for your ApexTrader account. Gain insights
@@ -66,12 +66,12 @@ function ProductPage() {
               visualisations.
             </p>
             <div>
-              <a href="https://apextrader-dashboard-1.onrender.com" target="_blank" rel="noreferrer">
+              <a href="https://apextrader-dashboard-1.onrender.com" target="_blank" rel="noreferrer" className="link-apex">
                 Learn More
               </a>
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 scroll-reveal scroll-reveal-delay-2">
             <img src="assets/console.png" alt="Console" className="img-fluid" />
           </div>
         </div>
@@ -79,10 +79,10 @@ function ProductPage() {
 
       <div className="container mt-5">
         <div className="row align-items-center">
-          <div className="col-md-6">
+          <div className="col-md-6 scroll-reveal">
             <img src="assets/coin.png" alt="Coin" className="img-fluid" />
           </div>
-          <div className="col-md-6 p-5 mt-5">
+          <div className="col-md-6 p-5 mt-5 scroll-reveal scroll-reveal-delay-2">
             <h1>Coin</h1>
             <p>
               Buy direct mutual funds online, commission-free, delivered
@@ -90,8 +90,8 @@ function ProductPage() {
               on your Android and iOS devices.
             </p>
             <div>
-              <a href="/signup">Try Demo</a>
-              <Link to="/products" style={{ marginLeft: "50px" }}>
+              <a href="/signup" className="link-apex">Try Demo</a>
+              <Link to="/products" className="link-apex" style={{ marginLeft: "50px" }}>
                 Learn More
               </Link>
             </div>
@@ -101,7 +101,7 @@ function ProductPage() {
 
       <div className="container mt-5">
         <div className="row align-items-center">
-          <div className="col-md-6 p-5 mt-5">
+          <div className="col-md-6 p-5 mt-5 scroll-reveal">
             <h1>Kite Connect API</h1>
             <p>
               Build powerful trading platforms and experiences with our super
@@ -109,10 +109,10 @@ function ProductPage() {
               investment app and showcase it to our clientbase.
             </p>
             <div>
-              <Link to="/products">Learn More</Link>
+              <Link to="/products" className="link-apex">Learn More</Link>
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 scroll-reveal scroll-reveal-delay-2">
             <img
               src="assets/kiteconnect.png"
               alt="Kite Connect"
@@ -124,10 +124,10 @@ function ProductPage() {
 
       <div className="container mt-5">
         <div className="row align-items-center">
-          <div className="col-md-6">
+          <div className="col-md-6 scroll-reveal">
             <img src="assets/varsity.png" alt="Varsity" className="img-fluid" />
           </div>
-          <div className="col-md-6 p-5 mt-5">
+          <div className="col-md-6 p-5 mt-5 scroll-reveal scroll-reveal-delay-2">
             <h1>Varsity mobile</h1>
             <p>
               An easy to grasp, collection of stock market lessons with
@@ -135,8 +135,8 @@ function ProductPage() {
               bite-size cards to help you learn on the go.
             </p>
             <div>
-              <a href="/signup">Try Demo</a>
-              <Link to="/products" style={{ marginLeft: "50px" }}>
+              <a href="/signup" className="link-apex">Try Demo</a>
+              <Link to="/products" className="link-apex" style={{ marginLeft: "50px" }}>
                 Learn More
               </Link>
             </div>
@@ -144,14 +144,14 @@ function ProductPage() {
         </div>
       </div>
 
-      <p className="text-center mt-5 mb-5">
+      <p className="text-center mt-5 mb-5 scroll-reveal">
         Want to know more about our technology stack? Check out the
         ApexTrader.tech blog.
       </p>
 
       <div className="container mt-5">
-        <div className="row text-center">
-          <h1>The ApexTrader Universe</h1>
+        <div className="row text-center scroll-reveal">
+          <h1 className="gradient-text">The ApexTrader Universe</h1>
           <p>
             Extend your trading and investment experience even further with our
             partner platforms
@@ -166,7 +166,11 @@ function ProductPage() {
                 { src: "/assets/goldenpiLogo.png", label: "Bonds trading platform" },
                 { src: "/assets/dittoLogo.png", label: "Insurance advisory" },
               ].map((item, i) => (
-                <div key={i} className="col-md-4 col-6 p-3 mt-4">
+                <div
+                  key={i}
+                  className="col-md-4 col-6 p-3 mt-4 scroll-reveal hover-lift"
+                  style={{ transitionDelay: `${i * 0.1}s` }}
+                >
                   <img
                     src={item.src}
                     alt={item.label}
@@ -181,7 +185,7 @@ function ProductPage() {
             </div>
           </div>
           <div className="mt-5 mb-5">
-            <Link to="/signup" className="btn btn-primary fs-5 px-4 py-2">
+            <Link to="/signup" className="btn sign-up-btn fs-5 px-4 py-2">
               Signup Now
             </Link>
           </div>

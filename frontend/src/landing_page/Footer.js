@@ -5,9 +5,9 @@ function Footer() {
   return (
     <footer style={{ backgroundColor: "rgb(250, 250, 250)" }}>
       <div className="container border-top mt-5">
-        <div className="row mt-5">
+        <div className="row mt-5 scroll-reveal">
           <div className="col-md-3 mb-4">
-            <p className="fw-bold fs-5" style={{ color: "rgb(245,104,52)" }}>
+            <p className="fw-bold fs-5 gradient-text">
               ApexTrader
             </p>
             <p className="text-muted" style={{ fontSize: "0.85rem" }}>
@@ -64,8 +64,6 @@ function Footer() {
             <Link to="/signup" className="d-block text-muted text-decoration-none mb-2">
               Open an account
             </Link>
-            {/* FIX #8: /funds does not exist in the frontend app — it lives in the
-                dashboard. Using a plain <a> to link to the dashboard /funds page. */}
             <a
               href="https://apextrader-dashboard-1.onrender.com/funds"
               target="_blank"
@@ -79,7 +77,7 @@ function Footer() {
             </Link>
           </div>
         </div>
-        <div className="mt-4 text-muted pb-4" style={{ fontSize: "13px" }}>
+        <div className="mt-4 text-muted pb-4 scroll-reveal" style={{ fontSize: "13px" }}>
           <p>
             ApexTrader Broking Ltd.: Member of NSE &amp; BSE – SEBI Registration no.:
             INZ000031633 CDSL: Depository services through ApexTrader Securities
