@@ -68,7 +68,7 @@ const Funds = () => {
   };
 
   return (
-    <>
+    <div className="fade-in-up">
       <div className="funds">
         <p>Instant, zero-cost fund transfers with UPI </p>
         <button className="btn btn-green" onClick={handleAddFunds}>
@@ -152,7 +152,7 @@ const Funds = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

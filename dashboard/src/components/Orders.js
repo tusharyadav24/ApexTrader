@@ -54,9 +54,9 @@ const Orders = () => {
   }
 
   return (
-    <>
+    <div className="fade-in-up">
       <h3 className="title">Orders ({orders.length})</h3>
-      <div className="order-table">
+      <div className="order-table scroll-reveal">
         <table>
           <thead>
             <tr>
@@ -114,7 +114,7 @@ const Orders = () => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 

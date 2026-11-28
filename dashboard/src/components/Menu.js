@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import api from "../api";
+import { useLiveMarket } from "./LiveMarketContext";
 
 const Menu = ({ user, onLogout }) => {
   const location = useLocation();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const { isLive } = useLiveMarket();
 
   const menuItems = [
     { label: "Dashboard", to: "/", exact: true },
+    { label: "Live Market", to: "/live", isLiveTab: true },
     { label: "Orders", to: "/orders" },
     { label: "Holdings", to: "/holdings" },
     { label: "Positions", to: "/positions" },
@@ -48,6 +51,9 @@ const Menu = ({ user, onLogout }) => {
             <li key={item.to}>
               <Link style={{ textDecoration: "none" }} to={item.to}>
                 <p className={isActive(item) ? "menu selected" : "menu"}>
+                  {item.isLiveTab && (
+                    <span className={`live-dot ${isLive ? "" : "paused"}`} />
+                  )}
                   {item.label}
                 </p>
               </Link>

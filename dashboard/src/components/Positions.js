@@ -31,10 +31,10 @@ const Positions = () => {
   if (error) return <p className="error-text">{error}</p>;
 
   return (
-    <>
+    <div className="fade-in-up">
       <h3 className="title">Positions ({allPositions.length})</h3>
 
-      <div className="order-table">
+      <div className="order-table scroll-reveal">
         <table>
           <thead>
             <tr>
@@ -81,7 +81,7 @@ const Positions = () => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 

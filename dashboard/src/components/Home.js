@@ -3,6 +3,7 @@ import api from "../api";
 import Dashboard from "./Dashboard";
 import TopBar from "./TopBar";
 import Login from "./Login";
+import { LiveMarketProvider } from "./LiveMarketContext";
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -23,8 +24,11 @@ const Home = () => {
 
   if (checking) {
     return (
-      <div className="loading-screen">
-        <p>Loading ApexTrader...</p>
+      <div className="loading-screen fade-in-up">
+        <span className="brand-text" style={{ fontSize: "1.6rem" }}>
+          ApexTrader
+        </span>
+        <p style={{ margin: 0, fontSize: "0.95rem" }}>Loading trading workspace...</p>
       </div>
     );
   }
@@ -34,10 +38,10 @@ const Home = () => {
   }
 
   return (
-    <>
+    <LiveMarketProvider>
       <TopBar user={user} onLogout={() => setUser(null)} />
       <Dashboard />
-    </>
+    </LiveMarketProvider>
   );
 };
 

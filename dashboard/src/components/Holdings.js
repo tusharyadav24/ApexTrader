@@ -57,10 +57,10 @@ const Holdings = () => {
   if (error) return <p className="error-text">{error}</p>;
 
   return (
-    <>
+    <div className="fade-in-up">
       <h3 className="title">Holdings ({allHoldings.length})</h3>
 
-      <div className="order-table">
+      <div className="order-table scroll-reveal">
         <table>
           <thead>
             <tr>
@@ -122,8 +122,10 @@ const Holdings = () => {
           <p>P&L</p>
         </div>
       </div>
-      <VerticalGraph data={data} />
-    </>
+      <div className="scroll-reveal scroll-reveal-delay-2" style={{ marginTop: "20px" }}>
+        <VerticalGraph data={data} />
+      </div>
+    </div>
   );
 };
 

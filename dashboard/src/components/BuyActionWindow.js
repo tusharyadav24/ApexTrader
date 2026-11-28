@@ -1,13 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import api from "../api";
 import GeneralContext from "./GeneralContext";
 import "./BuyActionWindow.css";
 
-const BuyActionWindow = ({ uid }) => {
+const BuyActionWindow = ({ uid, initialMode = "BUY", initialPrice = "" }) => {
   const [stockQuantity, setStockQuantity] = useState("1");
-  const [stockPrice, setStockPrice] = useState("");
-  const [mode, setMode] = useState("BUY");
+  const [stockPrice, setStockPrice] = useState(initialPrice);
+  const [mode, setMode] = useState(initialMode);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setMode(initialMode || "BUY");
+    if (initialPrice) setStockPrice(String(initialPrice));
+  }, [uid, initialMode, initialPrice]);
 
   const generalContext = useContext(GeneralContext);
 
