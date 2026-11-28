@@ -12,7 +12,6 @@ import Navbar from './landing_page/Navbar';
 import Notfound from './landing_page/Notfound';
 import Footer from './landing_page/Footer';
 
-// ─── Scroll-reveal observer (fires once per element) ───
 const initScrollReveal = () => {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -26,13 +25,11 @@ const initScrollReveal = () => {
     { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
   );
 
-  // Observe everything with class "scroll-reveal"
   document.querySelectorAll('.scroll-reveal').forEach((el) => {
     observer.observe(el);
   });
 };
 
-// Re-run after every route change (MutationObserver)
 const initMutationWatcher = () => {
   const mo = new MutationObserver(() => {
     initScrollReveal();
@@ -43,7 +40,6 @@ const initMutationWatcher = () => {
   });
 };
 
-// ─── Navbar scroll shadow ───
 const initNavbarShadow = () => {
   const handleScroll = () => {
     const nav = document.querySelector('.navbar');
@@ -58,7 +54,6 @@ const initNavbarShadow = () => {
   window.addEventListener('scroll', handleScroll, { passive: true });
 };
 
-// ─── Keep-alive ping to prevent Render sleep ───
 const API_BASE =
   process.env.REACT_APP_API_URL ||
   (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
@@ -68,7 +63,7 @@ const API_BASE =
 const keepAlive = () => {
   setInterval(() => {
     fetch(`${API_BASE}/health`).catch(() => {});
-  }, 10 * 60 * 1000); // every 10 minutes
+  }, 10 * 60 * 1000);
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -90,7 +85,6 @@ root.render(
   </React.StrictMode>
 );
 
-// Initialize effects after first paint
 setTimeout(() => {
   initScrollReveal();
   initMutationWatcher();

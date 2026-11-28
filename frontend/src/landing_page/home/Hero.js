@@ -31,7 +31,6 @@ function Hero() {
           </Link>
         </div>
 
-        {/* Scroll-down indicator */}
         <div className="scroll-indicator fade-in-up" style={{ animationDelay: "0.8s" }}>
           <span>Scroll to explore</span>
         </div>

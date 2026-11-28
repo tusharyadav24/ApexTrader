@@ -57,7 +57,6 @@ function Signup() {
           withCredentials: true,
         }
       );
-      // Show success state then redirect to dashboard
       setRedirecting(true);
       setTimeout(() => {
         window.location.href = DASHBOARD_URL;
